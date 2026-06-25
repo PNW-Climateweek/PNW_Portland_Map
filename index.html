@@ -6,335 +6,157 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-
   <style>
     :root {
-      /* ── PNW Climate Week Official Brand Colors ── */
-      --pnw-dark:   #00363A;   /* dark teal — backgrounds, header */
-      --pnw-mid:    #0E7F6C;   /* mid green — buttons, accents */
-      --pnw-bright: #17C6A5;   /* bright mint — highlights, active states */
+      --pnw-dark:   #00363A;
+      --pnw-mid:    #0E7F6C;
+      --pnw-bright: #17C6A5;
+      --pnw-mist:   #d6f5ef;
       --pnw-white:  #ffffff;
-      --pnw-mist:   #d6f5ef;   /* tinted mint for tag backgrounds */
-
-      /* UI neutrals */
       --text:   #1c1e2a;
       --muted:  #6b7280;
       --border: #dde5e0;
       --fog:    #f3f8f7;
-
       --radius: 10px;
-      --panel:  330px;
+      --panel:  340px;
     }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:var(--fog);color:var(--text);height:100dvh;display:flex;flex-direction:column;overflow:hidden}
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    /* HEADER */
+    header{background:var(--pnw-dark);padding:8px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-shrink:0;z-index:10;box-shadow:0 2px 10px rgba(0,0,0,0.3)}
+    .header-logo img{height:52px;width:auto;display:block;object-fit:contain}
+    .header-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+    .header-subtitle{font-size:0.68rem;color:rgba(255,255,255,0.5);font-weight:500;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap}
+    .event-count-badge{background:var(--pnw-bright);color:var(--pnw-dark);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.78rem;padding:4px 11px;border-radius:20px;white-space:nowrap}
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--fog);
-      color: var(--text);
-      height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
+    /* LAYOUT */
+    .app-body{display:flex;flex:1;overflow:hidden}
 
-    /* ── Header ── */
-    header {
-      background: var(--pnw-dark);
-      color: var(--pnw-white);
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-shrink: 0;
-      z-index: 10;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    }
+    /* SIDEBAR */
+    .sidebar{width:var(--panel);flex-shrink:0;display:flex;flex-direction:column;background:var(--pnw-white);border-right:1px solid var(--border);overflow:hidden;z-index:5}
+    .search-wrap{padding:12px 12px 0}
+    .search-input-row{display:flex;align-items:center;gap:8px;background:var(--fog);border:1.5px solid var(--border);border-radius:var(--radius);padding:0 12px;transition:border-color 0.2s}
+    .search-input-row:focus-within{border-color:var(--pnw-bright);background:var(--pnw-white)}
+    .search-input-row svg{color:var(--muted);flex-shrink:0}
+    #search-box{flex:1;border:none;background:transparent;padding:9px 0;font-family:'Inter',sans-serif;font-size:0.85rem;color:var(--text);outline:none}
+    #search-box::placeholder{color:var(--muted)}
+    #clear-search{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1rem;line-height:1;padding:2px;display:none}
 
-    .header-left { display: flex; align-items: center; gap: 14px; }
+    /* DAY FILTER */
+    .filter-section{padding:8px 12px 0}
+    .filter-label{font-size:0.67rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:5px}
+    .day-scroller{display:flex;gap:5px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
+    .day-scroller::-webkit-scrollbar{display:none}
+    .day-pill{flex-shrink:0;background:var(--fog);border:1.5px solid var(--border);color:var(--text);font-size:0.7rem;font-weight:700;padding:4px 9px;border-radius:20px;cursor:pointer;transition:all 0.15s;white-space:nowrap;user-select:none}
+    .day-pill:hover{border-color:var(--pnw-bright);color:var(--pnw-mid);background:var(--pnw-mist)}
+    .day-pill.active{background:var(--pnw-dark);border-color:var(--pnw-dark);color:var(--pnw-white)}
 
-    /* PNW Logo mark — text-based to match brand style */
-    .logo-lockup {
-      display: flex;
-      flex-direction: column;
-      line-height: 1;
-    }
-    .logo-pnw {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: 1.6rem;
-      color: var(--pnw-bright);
-      letter-spacing: -0.02em;
-      line-height: 1;
-    }
-    .logo-pnw span {
-      display: inline-block;
-      color: var(--pnw-bright);
-      font-size: 1.1rem;
-      vertical-align: super;
-      margin-left: 1px;
-    }
-    .logo-climateweek {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: 0.62rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--pnw-white);
-      margin-top: 1px;
-    }
-    .logo-dates {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 600;
-      font-size: 0.58rem;
-      letter-spacing: 0.08em;
-      color: var(--pnw-bright);
-      margin-top: 2px;
-    }
+    /* TAG FILTER */
+    .tag-scroller{display:flex;gap:5px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
+    .tag-scroller::-webkit-scrollbar{display:none}
+    .tag-pill{flex-shrink:0;background:var(--fog);border:1.5px solid var(--border);color:var(--text);font-size:0.68rem;font-weight:600;padding:3px 9px;border-radius:20px;cursor:pointer;transition:all 0.15s;white-space:nowrap;user-select:none}
+    .tag-pill:hover{border-color:var(--pnw-bright);color:var(--pnw-mid);background:var(--pnw-mist)}
+    .tag-pill.active{background:var(--pnw-mid);border-color:var(--pnw-mid);color:var(--pnw-white)}
 
-    .header-right { display: flex; align-items: center; gap: 10px; }
+    /* MAP LEGEND */
+    .layer-legend{padding:6px 12px;display:flex;flex-wrap:wrap;gap:8px;border-bottom:1px solid var(--border)}
+    .legend-item{display:flex;align-items:center;gap:4px;font-size:0.67rem;font-weight:600;color:var(--muted)}
+    .legend-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
 
-    .event-count-badge {
-      background: var(--pnw-bright);
-      color: var(--pnw-dark);
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: 0.78rem;
-      padding: 4px 11px;
-      border-radius: 20px;
-      white-space: nowrap;
-    }
+    /* RESULTS BAR */
+    .results-bar{padding:6px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-shrink:0}
+    .results-bar span{font-size:0.73rem;color:var(--muted);font-weight:500}
+    #reset-filters{font-size:0.7rem;color:var(--pnw-mid);font-weight:700;background:none;border:none;cursor:pointer;display:none}
+    #reset-filters:hover{text-decoration:underline}
 
-    .header-subtitle {
-      font-size: 0.68rem;
-      color: rgba(255,255,255,0.55);
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
+    /* EVENT LIST */
+    .event-list{flex:1;overflow-y:auto;padding:4px 0;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+    .event-card{padding:10px 12px;cursor:pointer;border-bottom:1px solid var(--border);transition:background 0.12s;position:relative}
+    .event-card:hover{background:var(--fog)}
+    .event-card.selected{background:var(--pnw-mist)}
+    .event-card.selected::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--pnw-bright)}
+    .event-datetime{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+    .event-day-badge{font-size:0.62rem;font-weight:700;padding:1px 6px;border-radius:10px;background:var(--pnw-dark);color:var(--pnw-bright);text-transform:uppercase;letter-spacing:0.04em}
+    .event-time{font-size:0.7rem;color:var(--muted);font-weight:500}
+    .event-name{font-family:'Space Grotesk',sans-serif;font-size:0.85rem;font-weight:600;color:var(--text);line-height:1.3;margin-bottom:2px}
+    .event-address{font-size:0.73rem;color:var(--muted);margin-bottom:6px;line-height:1.4}
+    .event-tags{display:flex;flex-wrap:wrap;gap:3px}
+    .event-tag{font-size:0.65rem;font-weight:600;color:var(--pnw-mid);background:var(--pnw-mist);padding:2px 7px;border-radius:12px;cursor:pointer;transition:background 0.1s}
+    .event-tag:hover{background:#a7ebe0}
+    .event-tag.highlight{background:var(--pnw-mid);color:var(--pnw-white)}
+    .directions-btn{margin-top:7px;display:inline-flex;align-items:center;gap:5px;font-size:0.7rem;font-weight:600;color:var(--pnw-white);background:var(--pnw-mid);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;text-decoration:none;transition:background 0.15s}
+    .directions-btn:hover{background:var(--pnw-dark)}
+    .no-results{padding:28px 20px;text-align:center;color:var(--muted);font-size:0.875rem;display:none}
 
-    /* ── Layout ── */
-    .app-body { display: flex; flex: 1; overflow: hidden; }
+    /* MAP */
+    #map-container{flex:1;position:relative}
+    #map{width:100%;height:100%}
 
-    /* ── Sidebar ── */
-    .sidebar {
-      width: var(--panel);
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      background: var(--pnw-white);
-      border-right: 1px solid var(--border);
-      overflow: hidden;
-      z-index: 5;
-    }
+    /* LAYER TOGGLES */
+    .map-layer-controls{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;gap:5px;z-index:5}
+    .layer-btn{display:flex;align-items:center;gap:7px;background:var(--pnw-white);border:2px solid var(--border);border-radius:8px;padding:6px 11px;font-family:'Space Grotesk',sans-serif;font-size:0.74rem;font-weight:600;color:var(--text);cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.12);transition:all 0.15s;white-space:nowrap;user-select:none}
+    .layer-btn:hover{border-color:var(--pnw-bright);color:var(--pnw-mid)}
+    .layer-btn.active{background:var(--pnw-dark);border-color:var(--pnw-dark);color:var(--pnw-white);box-shadow:0 2px 8px rgba(0,54,58,0.35)}
+    .layer-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+    #btn-traffic .layer-dot{background:#e07a2f}
+    #btn-transit .layer-dot{background:#1967d2}
+    #btn-parking .layer-dot{background:#8b5cf6}
+    #btn-evac .layer-dot{background:#dc2626}
+    #btn-signage .layer-dot{background:#f59e0b}
 
-    /* Search */
-    .search-wrap { padding: 14px 14px 0; }
-    .search-input-row {
-      display: flex; align-items: center; gap: 8px;
-      background: var(--fog); border: 1.5px solid var(--border);
-      border-radius: var(--radius); padding: 0 12px; transition: border-color 0.2s;
-    }
-    .search-input-row:focus-within { border-color: var(--pnw-bright); background: var(--pnw-white); }
-    .search-input-row svg { color: var(--muted); flex-shrink: 0; }
-    #search-box {
-      flex: 1; border: none; background: transparent; padding: 10px 0;
-      font-family: 'Inter', sans-serif; font-size: 0.875rem; color: var(--text); outline: none;
-    }
-    #search-box::placeholder { color: var(--muted); }
-    #clear-search {
-      background: none; border: none; cursor: pointer;
-      color: var(--muted); font-size: 1rem; line-height: 1; padding: 2px; display: none;
-    }
+    /* INFO WINDOW */
+    .gm-iw-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.92rem;color:var(--text);margin-bottom:2px}
+    .gm-iw-meta{font-size:0.72rem;color:var(--pnw-mid);font-weight:600;margin-bottom:4px}
+    .gm-iw-addr{font-size:0.74rem;color:var(--muted);margin-bottom:7px}
+    .gm-iw-note{font-size:0.72rem;color:var(--muted);margin-bottom:8px;line-height:1.4}
+    .gm-iw-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:9px}
+    .gm-iw-tag{font-size:0.63rem;font-weight:700;color:var(--pnw-mid);background:var(--pnw-mist);padding:2px 7px;border-radius:12px}
+    .gm-iw-badge{display:inline-block;font-size:0.63rem;font-weight:700;padding:2px 8px;border-radius:12px;margin-bottom:6px}
+    .gm-iw-dir{display:inline-flex;align-items:center;gap:5px;font-size:0.73rem;font-weight:600;color:var(--pnw-white);background:var(--pnw-mid);padding:6px 12px;border-radius:6px;text-decoration:none}
+    .gm-iw-dir:hover{background:var(--pnw-dark)}
 
-    /* Layer legend in sidebar */
-    .layer-legend {
-      padding: 10px 14px 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .legend-item {
-      display: flex; align-items: center; gap: 5px;
-      font-size: 0.68rem; font-weight: 600; color: var(--muted);
-    }
-    .legend-dot {
-      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
-    }
-
-    /* Hashtag filter bar */
-    .filter-section { padding: 10px 14px 0; }
-    .filter-label {
-      font-size: 0.68rem; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.06em; color: var(--muted); margin-bottom: 6px;
-    }
-    .tag-scroller {
-      display: flex; gap: 6px; overflow-x: auto;
-      padding-bottom: 8px; scrollbar-width: none;
-    }
-    .tag-scroller::-webkit-scrollbar { display: none; }
-    .tag-pill {
-      flex-shrink: 0; background: var(--fog); border: 1.5px solid var(--border);
-      color: var(--text); font-size: 0.7rem; font-weight: 600;
-      padding: 4px 10px; border-radius: 20px; cursor: pointer;
-      transition: all 0.15s; white-space: nowrap; user-select: none;
-    }
-    .tag-pill:hover { border-color: var(--pnw-bright); color: var(--pnw-mid); background: var(--pnw-mist); }
-    .tag-pill.active { background: var(--pnw-mid); border-color: var(--pnw-mid); color: var(--pnw-white); }
-
-    /* Results bar */
-    .results-bar {
-      padding: 8px 14px 6px; display: flex; align-items: center;
-      justify-content: space-between; border-bottom: 1px solid var(--border); flex-shrink: 0;
-    }
-    .results-bar span { font-size: 0.75rem; color: var(--muted); font-weight: 500; }
-    #reset-filters {
-      font-size: 0.72rem; color: var(--pnw-mid); font-weight: 600;
-      background: none; border: none; cursor: pointer; display: none;
-    }
-    #reset-filters:hover { text-decoration: underline; }
-
-    /* Event list */
-    .event-list {
-      flex: 1; overflow-y: auto; padding: 6px 0;
-      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
-    }
-    .event-card {
-      padding: 12px 14px; cursor: pointer;
-      border-bottom: 1px solid var(--border);
-      transition: background 0.12s; position: relative;
-    }
-    .event-card:hover { background: var(--fog); }
-    .event-card.selected { background: var(--pnw-mist); }
-    .event-card.selected::before {
-      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-      width: 3px; background: var(--pnw-bright);
-    }
-    .event-name {
-      font-family: 'Space Grotesk', sans-serif; font-size: 0.875rem;
-      font-weight: 600; color: var(--text); line-height: 1.35; margin-bottom: 3px;
-    }
-    .event-address { font-size: 0.75rem; color: var(--muted); margin-bottom: 7px; line-height: 1.4; }
-    .event-tags { display: flex; flex-wrap: wrap; gap: 4px; }
-    .event-tag {
-      font-size: 0.67rem; font-weight: 600; color: var(--pnw-mid);
-      background: var(--pnw-mist); padding: 2px 7px; border-radius: 12px;
-      cursor: pointer; transition: background 0.1s;
-    }
-    .event-tag:hover { background: #a7ebe0; }
-    .event-tag.highlight { background: var(--pnw-mid); color: var(--pnw-white); }
-    .directions-btn {
-      margin-top: 8px; display: inline-flex; align-items: center; gap: 5px;
-      font-size: 0.72rem; font-weight: 600; color: var(--pnw-white);
-      background: var(--pnw-mid); border: none; border-radius: 6px;
-      padding: 5px 10px; cursor: pointer; text-decoration: none; transition: background 0.15s;
-    }
-    .directions-btn:hover { background: var(--pnw-dark); }
-    .no-results {
-      padding: 32px 20px; text-align: center;
-      color: var(--muted); font-size: 0.875rem; display: none;
-    }
-
-    /* ── Map ── */
-    #map-container { flex: 1; position: relative; }
-    #map { width: 100%; height: 100%; }
-
-    /* ── Layer Toggle Controls (all 5) ── */
-    .map-layer-controls {
-      position: absolute;
-      top: 12px; right: 12px;
-      display: flex; flex-direction: column; gap: 6px;
-      z-index: 5;
-    }
-    .layer-btn {
-      display: flex; align-items: center; gap: 7px;
-      background: var(--pnw-white); border: 2px solid var(--border);
-      border-radius: 8px; padding: 7px 12px;
-      font-family: 'Space Grotesk', sans-serif; font-size: 0.76rem; font-weight: 600;
-      color: var(--text); cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-      transition: all 0.15s; white-space: nowrap; user-select: none;
-    }
-    .layer-btn:hover { border-color: var(--pnw-bright); color: var(--pnw-mid); }
-    .layer-btn.active {
-      background: var(--pnw-dark); border-color: var(--pnw-dark); color: var(--pnw-white);
-      box-shadow: 0 2px 8px rgba(0,54,58,0.35);
-    }
-    .layer-dot {
-      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
-    }
-    /* Each layer has its own dot color */
-    #btn-traffic .layer-dot  { background: #e07a2f; }
-    #btn-transit .layer-dot  { background: #1967d2; }
-    #btn-parking .layer-dot  { background: #8b5cf6; }
-    #btn-evac .layer-dot     { background: #dc2626; }
-    #btn-signage .layer-dot  { background: #f59e0b; }
-
-    /* Info window */
-    .gm-iw-title {
-      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
-      font-size: 0.92rem; color: var(--text); margin-bottom: 3px;
-    }
-    .gm-iw-addr { font-size: 0.76rem; color: var(--muted); margin-bottom: 7px; }
-    .gm-iw-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 9px; }
-    .gm-iw-tag {
-      font-size: 0.64rem; font-weight: 700; color: var(--pnw-mid);
-      background: var(--pnw-mist); padding: 2px 7px; border-radius: 12px;
-    }
-    .gm-iw-badge {
-      display: inline-block; font-size: 0.64rem; font-weight: 700;
-      padding: 2px 8px; border-radius: 12px; margin-bottom: 7px;
-    }
-    .gm-iw-dir {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-size: 0.74rem; font-weight: 600; color: var(--pnw-white);
-      background: var(--pnw-mid); padding: 6px 12px; border-radius: 6px; text-decoration: none;
-    }
-    .gm-iw-dir:hover { background: var(--pnw-dark); }
-
-    /* Mobile */
-    @media (max-width: 640px) {
-      .app-body { flex-direction: column; }
-      .sidebar { width: 100%; height: 44dvh; border-right: none; border-bottom: 1px solid var(--border); }
-      #map-container { flex: 1; }
-      :root { --panel: 100%; }
-      .header-subtitle { display: none; }
+    @media(max-width:640px){
+      .app-body{flex-direction:column}
+      .sidebar{width:100%;height:44dvh;border-right:none;border-bottom:1px solid var(--border)}
+      #map-container{flex:1}
+      :root{--panel:100%}
+      .header-subtitle{display:none}
     }
   </style>
 </head>
 <body>
 
-<!-- ── Header with PNW Climate Week Branding ── -->
 <header>
-  <div class="header-left">
-    <div class="logo-lockup">
-      <div class="logo-pnw">PNW<span>🌲</span></div>
-      <div class="logo-climateweek">Climate Week</div>
-      <div class="logo-dates">July 13–19, 2026 · Portland, OR</div>
-    </div>
+  <div class="header-logo">
+    <img src="data:image/png;base64,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" alt="PNW Climate Week Portland" />
   </div>
   <div class="header-right">
-    <span class="header-subtitle">Interactive Event Map</span>
-    <div class="event-count-badge" id="header-count">33 events</div>
+    <span class="header-subtitle">July 13–19, 2026 · Event Map</span>
+    <div class="event-count-badge" id="header-count">37 events</div>
   </div>
 </header>
 
 <div class="app-body">
-
-  <!-- ── Sidebar ── -->
   <aside class="sidebar">
-
     <div class="search-wrap">
       <div class="search-input-row">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input id="search-box" type="search" placeholder="Search events or #hashtags…" autocomplete="off">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="search-box" type="search" placeholder="Search events, days, or #hashtags…" autocomplete="off">
         <button id="clear-search" title="Clear">✕</button>
       </div>
     </div>
 
-    <!-- Map layer legend -->
+    <div class="filter-section">
+      <div class="filter-label">Filter by day</div>
+      <div class="day-scroller" id="day-bar"></div>
+    </div>
+
+    <div class="filter-section" style="padding-bottom:8px">
+      <div class="filter-label">Filter by topic</div>
+      <div class="tag-scroller" id="tag-bar"></div>
+    </div>
+
     <div class="layer-legend">
       <div class="legend-item"><div class="legend-dot" style="background:#17C6A5"></div>Events</div>
       <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>Parking</div>
@@ -342,422 +164,413 @@
       <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Signage</div>
     </div>
 
-    <div class="filter-section">
-      <div class="filter-label">Filter by topic</div>
-      <div class="tag-scroller" id="tag-bar"></div>
-    </div>
-
     <div class="results-bar">
-      <span id="results-count">33 events</span>
-      <button id="reset-filters">Reset filters</button>
+      <span id="results-count">37 events</span>
+      <button id="reset-filters">Reset all filters</button>
     </div>
 
     <div class="event-list" id="event-list"></div>
-    <div class="no-results" id="no-results">No events match — try a different search or tag.</div>
-
+    <div class="no-results" id="no-results">No events match — try a different filter.</div>
   </aside>
 
-  <!-- ── Map + All Layer Toggle Buttons ── -->
   <div id="map-container">
     <div id="map"></div>
     <div class="map-layer-controls">
-      <button class="layer-btn" id="btn-traffic">
-        <span class="layer-dot"></span>🚦 Traffic
-      </button>
-      <button class="layer-btn" id="btn-transit">
-        <span class="layer-dot"></span>🚌 Transit
-      </button>
-      <button class="layer-btn" id="btn-parking">
-        <span class="layer-dot"></span>🅿️ Parking
-      </button>
-      <button class="layer-btn" id="btn-evac">
-        <span class="layer-dot"></span>🚨 Evacuation
-      </button>
-      <button class="layer-btn" id="btn-signage">
-        <span class="layer-dot"></span>📍 Signage Opps
-      </button>
+      <button class="layer-btn" id="btn-traffic"><span class="layer-dot"></span>🚦 Traffic</button>
+      <button class="layer-btn" id="btn-transit"><span class="layer-dot"></span>🚌 Transit</button>
+      <button class="layer-btn" id="btn-parking"><span class="layer-dot"></span>🅿️ Parking</button>
+      <button class="layer-btn" id="btn-evac"><span class="layer-dot"></span>🚨 Evacuation</button>
+      <button class="layer-btn" id="btn-signage"><span class="layer-dot"></span>📍 Signage Opps</button>
     </div>
   </div>
-
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════════════
-// EVENT DATA — 33 PNW Climate Week events
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+// EVENT DATA — with date, day, time
+// ═══════════════════════════════════════════════════
 const EVENTS = [
-  {title:"Dharma Rain Zen Center",address:"8500 NE Siskiyou St, Portland, OR 97220",lat:45.5428,lng:-122.5748,tags:["ClimateAction","CommunityResilience"]},
-  {title:"Latourell Falls",address:"Historic Columbia River Hwy, Corbett, OR 97019",lat:45.5382,lng:-122.2177,tags:["Nature","Hiking","Networking"]},
-  {title:"Lewis & Clark College",address:"615 S Palatine Hill Rd, Portland, OR 97219",lat:45.4500,lng:-122.6700,tags:["ClimateEducation","Policy","Youth"]},
-  {title:"Willamette Park",address:"6500 S Macadam Ave, Portland, OR 97219",lat:45.4790,lng:-122.6700,tags:["CircularEconomy","ZeroWaste","Community"]},
-  {title:"Sunnyside Community Center",address:"3520 SE Yamhill St, Portland, OR 97214",lat:45.5160,lng:-122.6270,tags:["ClimateDoc","Storytelling","LocalSolutions"]},
-  {title:"Community Warehouse",address:"464 NE 219th Ave, Gresham, OR 97030",lat:45.5280,lng:-122.4370,tags:["Reuse","CircularEconomy"]},
-  {title:"Future ReUse Builders",address:"3625 N Mississippi Ave, Portland, OR 97227",lat:45.5480,lng:-122.6750,tags:["Reuse","DIY","Youth","Education"]},
-  {title:"Energy Empowerment",address:"6844 N Cutter Cir, Portland, OR 97217",lat:45.5700,lng:-122.7000,tags:["EnergyEfficiency","HomeRetrofit","Community"]},
-  {title:"Timberlab",address:"1601 NE Columbia Blvd, Portland, OR 97211",lat:45.5600,lng:-122.6500,tags:["RegenerativeMaterials","MassTimber","Innovation"]},
-  {title:"McMenamins Mission Theater",address:"1624 NW Glisan St, Portland, OR 97209",lat:45.5250,lng:-122.6880,tags:["Youth","Film","ClimateAction","Panel"]},
-  {title:"Place to B",address:"1661 SE 3rd Ave, Portland, OR 97214",lat:45.5120,lng:-122.6630,tags:["ClimateLeadership","ProfessionalDevelopment"]},
-  {title:"Audrey McCall Beach",address:"Portland, OR",lat:45.5100,lng:-122.6740,tags:["Water","Community","ClimateResilience"]},
-  {title:"Metro Regional Government",address:"600 NE Grand Ave, Portland, OR 97232",lat:45.5280,lng:-122.6600,tags:["ClimateResilience","Investment","Policy"]},
-  {title:"Hungry Tiger",address:"213 SE 12th Ave, Portland, OR 97214",lat:45.5210,lng:-122.6540,tags:["EV","FleetElectrification","CleanTransport"]},
-  {title:"PAE",address:"151 SW 1st Ave, Portland, OR 97204",lat:45.5200,lng:-122.6740,tags:["Aviation","ClimateCrisis","SustainableTravel"]},
-  {title:"Sincere Studio",address:"2134 N Flint Ave, Portland, OR 97227",lat:45.5400,lng:-122.6720,tags:["SlowFashion","Mending","SustainableFashion"]},
-  {title:"UpStart Collective",address:"111 SW 5th Ave, Portland, OR 97204",lat:45.5210,lng:-122.6760,tags:["EnergyStorage","Batteries","CleanTech"]},
-  {title:"Hostel Cafe",address:"1810 NW Glisan St, Portland, OR 97209",lat:45.5250,lng:-122.6910,tags:["GlobalClimate","Networking","Development"]},
-  {title:"Vestas",address:"1417 NW Everett St, Portland, OR 97209",lat:45.5250,lng:-122.6850,tags:["WomenInEnergy","CleanEnergy","Leadership"]},
-  {title:"Midtown Beer Garden",address:"431 SW Harvey Milk St, Portland, OR 97204",lat:45.5190,lng:-122.6780,tags:["Networking","HappyHour","ClimateCurious"]},
-  {title:"OSU-Cascades Innovation Co-Lab",address:"650 SW Columbia St, Bend, OR 97702",lat:44.0520,lng:-121.3150,tags:["EnergyTransition","CleanEnergy","HonestConversation"]},
-  {title:"Lents Park",address:"SE 92nd Ave & SE Holgate Blvd, Portland, OR 97266",lat:45.4900,lng:-122.5700,tags:["UrbanForestry","Equity","BikeRide","Pedalpalooza"]},
-  {title:"Kindness Farm",address:"7101 SE 127th Ave, Portland, OR 97236",lat:45.4700,lng:-122.5300,tags:["UrbanFarm","Volunteer","FoodJustice","Community"]},
-  {title:"4779 NE Going St — CoHousing",address:"4779 NE Going St, Portland, OR 97211",lat:45.5540,lng:-122.6150,tags:["CoHousing","CommunityLiving","SustainableLiving"]},
-  {title:"Hillsboro Farmers' Market",address:"150 E Main St, Hillsboro, OR 97123",lat:45.5230,lng:-122.9850,tags:["SustainableLiving","FarmersMarket","EcoFriendly"]},
-  {title:"4053 NE 18th Ave — Solar Home",address:"4053 NE 18th Ave, Portland, OR 97212",lat:45.5500,lng:-122.6500,tags:["Community","Solar","Neighborhood"]},
-  {title:"Social Good Place",address:"4511 SE Main St, Portland, OR 97215",lat:45.5140,lng:-122.6190,tags:["ClothingSwap","SustainableFashion","Community"]},
-  {title:"Eliot Neighborhood",address:"Portland, OR (TBC)",lat:45.5400,lng:-122.6600,tags:["Pride","LGBTQ","Networking","Climate"]},
-  {title:"Slabtown",address:"Portland, OR (TBC)",lat:45.5350,lng:-122.6900,tags:["NaturalFibers","SustainableTextiles","FactoryTour"]},
-  {title:"Hazelwood",address:"Portland, OR (TBC)",lat:45.5100,lng:-122.5600,tags:["GarmentIndustry","SustainableFashion","FactoryTour"]},
-  {title:"Climate Innovation at Work",address:"Portland, OR (TBC)",lat:45.5200,lng:-122.6800,tags:["ClimateInnovation","GreenJobs","EconomicDevelopment"]},
-  {title:"SW Portland — Embodied Carbon",address:"Portland, OR (TBC)",lat:45.4800,lng:-122.7000,tags:["Buildings","EmbodiedCarbon","ClimateSolutions"]},
-  {title:"Global Shocks, Local Tables",address:"NW Portland (TBC)",lat:45.5300,lng:-122.6900,tags:["FoodJustice","SmallholderFarmers","Resilience"]}
+  {title:"Rumble on the River: We're Not Gonna Take the Heat!",date:"Jul 9",day:"Thu",time:"5:00 PM",address:"8500 NE Siskiyou St, Portland, OR 97220",lat:45.5428,lng:-122.5748,tags:["ClimateAction","CommunityResilience"]},
+  {title:"PNW Climate Week Hike and Network",date:"Jul 12",day:"Sun",time:"9:00 AM",address:"Historic Columbia River Hwy, Corbett, OR 97019",lat:45.5382,lng:-122.2177,tags:["Nature","Hiking","Networking"]},
+  {title:"Fall in Love with the Future: Empowering Local Climate Action",date:"Jul 13",day:"Mon",time:"9:00 AM",address:"615 S Palatine Hill Rd, Portland, OR 97219",lat:45.4500,lng:-122.6700,tags:["ClimateEducation","Policy","Youth"]},
+  {title:"Intro To The Circular Economy & Collaborative Discussion On Waste",date:"Jul 13",day:"Mon",time:"6:00 PM",address:"6500 S Macadam Ave, Portland, OR 97219",lat:45.4790,lng:-122.6700,tags:["CircularEconomy","ZeroWaste","Community"]},
+  {title:"NW Documentary: Local Films about Climate Solutions",date:"Jul 13",day:"Mon",time:"7:00 PM",address:"3520 SE Yamhill St, Portland, OR 97214",lat:45.5160,lng:-122.6270,tags:["ClimateDoc","Storytelling","LocalSolutions"]},
+  {title:"Give it a Second Life: PNW Climate Week at the Furniture Bank",date:"Jul 14",day:"Tue",time:"9:00 AM",address:"464 NE 219th Ave, Gresham, OR 97030",lat:45.5280,lng:-122.4370,tags:["Reuse","CircularEconomy"]},
+  {title:"PNW Climate Week + PDX Pride: Networking Mixer",date:"Jul 14",day:"Tue",time:"11:00 AM",address:"Eliot Neighborhood, Portland, OR (TBC)",lat:45.5400,lng:-122.6600,tags:["Pride","LGBTQ","Networking","Climate"]},
+  {title:"Future ReUse Builders Story Time & Tool Petting Zoo",date:"Jul 14",day:"Tue",time:"12:00 PM",address:"3625 N Mississippi Ave, Portland, OR 97227",lat:45.5480,lng:-122.6750,tags:["Reuse","DIY","Youth","Education"]},
+  {title:"Energy Empowerment: Home Energy Solutions & Community Connections",date:"Jul 14",day:"Tue",time:"4:00 PM",address:"6844 N Cutter Cir, Portland, OR 97217",lat:45.5700,lng:-122.7000,tags:["EnergyEfficiency","HomeRetrofit","Community"]},
+  {title:"Oregon's Regenerative Materials Showcase",date:"Jul 14",day:"Tue",time:"4:30 PM",address:"1601 NE Columbia Blvd, Portland, OR 97211",lat:45.5600,lng:-122.6500,tags:["RegenerativeMaterials","MassTimber","Innovation"]},
+  {title:"The Future is Watching: Youth Film Screening + Panel",date:"Jul 14",day:"Tue",time:"5:00 PM",address:"1624 NW Glisan St, Portland, OR 97209",lat:45.5250,lng:-122.6880,tags:["Youth","Film","ClimateAction","Panel"]},
+  {title:"Deepening Your Capacity for Climate Leadership",date:"Jul 14",day:"Tue",time:"5:30 PM",address:"1661 SE 3rd Ave, Portland, OR 97214",lat:45.5120,lng:-122.6630,tags:["ClimateLeadership","ProfessionalDevelopment"]},
+  {title:"Tuesday Splashdown @ Audrey McCall Beach!",date:"Jul 14",day:"Tue",time:"5:30 PM",address:"Portland, OR",lat:45.5100,lng:-122.6740,tags:["Water","Community","ClimateResilience"]},
+  {title:"Reimagining & Repurposing: Giving Materials a Second Life",date:"Jul 15",day:"Wed",time:"12:00 PM",address:"3625 N Mississippi Ave, Portland, OR 97227",lat:45.5482,lng:-122.6752,tags:["Reuse","CircularEconomy","Education"]},
+  {title:"Metro Climate Lab: Powering Resilience with Bold Vision",date:"Jul 15",day:"Wed",time:"2:30 PM",address:"600 NE Grand Ave, Portland, OR 97232",lat:45.5280,lng:-122.6600,tags:["ClimateResilience","Investment","Policy"]},
+  {title:"Fleet Electrification Mixer: Connect with PNW Clean Transport",date:"Jul 15",day:"Wed",time:"3:00 PM",address:"213 SE 12th Ave, Portland, OR 97214",lat:45.5210,lng:-122.6540,tags:["EV","FleetElectrification","CleanTransport"]},
+  {title:"Confessions of a Pilot: How to Fly Better in a Climate Crisis",date:"Jul 15",day:"Wed",time:"4:30 PM",address:"151 SW 1st Ave, Portland, OR 97204",lat:45.5200,lng:-122.6740,tags:["Aviation","ClimateCrisis","SustainableTravel"]},
+  {title:"Community Mending and Sustainable Fashion at Sincere Studio",date:"Jul 15",day:"Wed",time:"6:00 PM",address:"2134 N Flint Ave, Portland, OR 97227",lat:45.5400,lng:-122.6720,tags:["SlowFashion","Mending","SustainableFashion"]},
+  {title:"Global Shocks, Local Tables: Why Smallholder Farmer Resilience Matters",date:"Jul 16",day:"Thu",time:"11:00 AM",address:"NW Portland (private location)",lat:45.5300,lng:-122.6900,tags:["FoodJustice","SmallholderFarmers","Resilience"]},
+  {title:"RBC Classes Open House: Explore, Create, and Get Inspired",date:"Jul 16",day:"Thu",time:"12:00 PM",address:"3625 N Mississippi Ave, Portland, OR 97227",lat:45.5484,lng:-122.6754,tags:["Reuse","DIY","Education","Community"]},
+  {title:"Portland State of Charge: Batteries at PNW Climate Week",date:"Jul 16",day:"Thu",time:"12:00 PM",address:"111 SW 5th Ave, Portland, OR 97204",lat:45.5210,lng:-122.6760,tags:["EnergyStorage","Batteries","CleanTech"]},
+  {title:"Oregon Natural Fiber Mill — Factory Tour",date:"Jul 16",day:"Thu",time:"2:00 PM",address:"Slabtown, Portland, OR (TBC)",lat:45.5350,lng:-122.6900,tags:["NaturalFibers","SustainableTextiles","FactoryTour"]},
+  {title:"Climate Innovation at Work",date:"Jul 16",day:"Thu",time:"2:30 PM",address:"Prosper Portland (TBC)",lat:45.5200,lng:-122.6800,tags:["ClimateInnovation","GreenJobs","EconomicDevelopment"]},
+  {title:"Portland Garment Factory — Factory Tour",date:"Jul 16",day:"Thu",time:"3:30 PM",address:"Hazelwood, Portland, OR (TBC)",lat:45.5100,lng:-122.5600,tags:["GarmentIndustry","SustainableFashion","FactoryTour"]},
+  {title:"Development Drinks: Global Climate Solutions",date:"Jul 16",day:"Thu",time:"4:30 PM",address:"1810 NW Glisan St, Portland, OR 97209",lat:45.5250,lng:-122.6910,tags:["GlobalClimate","Networking","Development"]},
+  {title:"Connecting with Power: Women in Clean Energy Leadership",date:"Jul 16",day:"Thu",time:"5:00 PM",address:"1417 NW Everett St, Portland, OR 97209",lat:45.5250,lng:-122.6850,tags:["WomenInEnergy","CleanEnergy","Leadership"]},
+  {title:"Climate Curious PNW Climate Week Happy Hour",date:"Jul 16",day:"Thu",time:"5:30 PM",address:"431 SW Harvey Milk St, Portland, OR 97204",lat:45.5190,lng:-122.6780,tags:["Networking","HappyHour","ClimateCurious"]},
+  {title:"An Honest Discussion About the Energy Transition",date:"Jul 16",day:"Thu",time:"5:30 PM",address:"650 SW Columbia St, Bend, OR 97702",lat:44.0520,lng:-121.3150,tags:["EnergyTransition","CleanEnergy","HonestConversation"]},
+  {title:"Love Trees! 5th Annual 350PDX Urban Shade Equity Pedalpalooza Ride",date:"Jul 16",day:"Thu",time:"6:00 PM",address:"SE 92nd Ave & SE Holgate Blvd, Portland, OR 97266",lat:45.4900,lng:-122.5700,tags:["UrbanForestry","Equity","BikeRide","Pedalpalooza"]},
+  {title:"Solar, Reuse & Housing Innovation: Practical Pathways for Portland Homeowners",date:"Jul 17",day:"Fri",time:"8:30 AM",address:"3625 N Mississippi Ave, Portland, OR 97227",lat:45.5486,lng:-122.6756,tags:["Solar","Reuse","Housing","Community"]},
+  {title:"Tour and Volunteer at Kindness Farm!",date:"Jul 17",day:"Fri",time:"9:00 AM",address:"7101 SE 127th Ave, Portland, OR 97236",lat:45.4700,lng:-122.5300,tags:["UrbanFarm","Volunteer","FoodJustice","Community"]},
+  {title:"Buildings Cause a Third of Global Emissions. Who's Solving It?",date:"Jul 17",day:"Fri",time:"9:00 AM",address:"Southwest Portland (TBC)",lat:45.4800,lng:-122.7000,tags:["Buildings","EmbodiedCarbon","ClimateSolutions"]},
+  {title:"Better Together: Co-Housing Tour",date:"Jul 17",day:"Fri",time:"5:00 PM",address:"4779 NE Going St, Portland, OR 97211",lat:45.5540,lng:-122.6150,tags:["CoHousing","CommunityLiving","SustainableLiving"]},
+  {title:"Westside Sustainable Living Fair",date:"Jul 18",day:"Sat",time:"9:00 AM",address:"150 E Main St, Hillsboro, OR 97123",lat:45.5230,lng:-122.9850,tags:["SustainableLiving","FarmersMarket","EcoFriendly"]},
+  {title:"Sabin Sun-Fun Day",date:"Jul 18",day:"Sat",time:"10:00 AM",address:"4053 NE 18th Ave, Portland, OR 97212",lat:45.5500,lng:-122.6500,tags:["Community","Solar","Neighborhood"]},
+  {title:"PDX Thread Collective Clothing Swap",date:"Jul 18",day:"Sat",time:"10:00 AM",address:"4511 SE Main St, Portland, OR 97215",lat:45.5140,lng:-122.6190,tags:["ClothingSwap","SustainableFashion","Community"]},
+  {title:"Discover Pathways into Reuse, Sustainability, and the Trades",date:"Jul 18",day:"Sat",time:"11:00 AM",address:"3625 N Mississippi Ave, Portland, OR 97227",lat:45.5488,lng:-122.6758,tags:["Reuse","Trades","Education","Youth"]}
 ];
 
-// ═══════════════════════════════════════════════════════════════
-// PARKING DATA — public garages & MAX park-and-rides near events
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+// PARKING — confirmed pricing as of July 2026
+// SmartPark: $2.20/hr weekdays (first 4 hrs), $7 flat Sat/Sun
+// Downtown on-street: $3.00/hr Mon-Sat 8am-7pm
+// ═══════════════════════════════════════════════════
 const PARKING = [
-  {title:"Smart Park — SW 10th & Yamhill",address:"730 SW 10th Ave, Portland, OR 97205",lat:45.5195,lng:-122.6837,note:"City-owned garage, 24/7. Close to PAE, UpStart, Midtown Beer Garden."},
-  {title:"Smart Park — SW 4th & Yamhill",address:"800 SW 4th Ave, Portland, OR 97204",lat:45.5183,lng:-122.6775,note:"City-owned garage. Central downtown. Near PAE, Hungry Tiger, Place to B."},
-  {title:"Smart Park — SW 3rd & Alder",address:"333 SW 3rd Ave, Portland, OR 97204",lat:45.5210,lng:-122.6740,note:"Downtown core. Walking distance to most SW events."},
-  {title:"NW Pettygrove Garage",address:"2136 NW Pettygrove St, Portland, OR 97210",lat:45.5300,lng:-122.6900,note:"Convenient for Mission Theater, Hostel Cafe, Vestas."},
-  {title:"Lloyd District Garage",address:"815 NE Multnomah St, Portland, OR 97232",lat:45.5292,lng:-122.6551,note:"Near Metro Regional Government. MAX Red/Blue line adjacent."},
-  {title:"SE Morrison & 12th Surface Lot",address:"1200 SE Morrison St, Portland, OR 97214",lat:45.5175,lng:-122.6540,note:"Near Hungry Tiger, Sunnyside Community Center."},
-  {title:"N Mississippi Ave Street Parking",address:"N Mississippi Ave, Portland, OR 97227",lat:45.5480,lng:-122.6760,note:"Free street parking near Future ReUse Builders & Sincere Studio."},
-  {title:"Expo Center MAX Park & Ride",address:"2060 N Marine Dr, Portland, OR 97217",lat:45.5950,lng:-122.6880,note:"Free MAX park-and-ride. Yellow Line to downtown in 20 min."},
-  {title:"Sunset TC MAX Park & Ride",address:"3205 SW Cedar Hills Blvd, Beaverton, OR 97005",lat:45.5197,lng:-122.7697,note:"Free park-and-ride. MAX Blue Line direct to downtown Portland."},
-  {title:"Gateway TC MAX Park & Ride",address:"NE 99th Ave & Pacific St, Portland, OR 97220",lat:45.5285,lng:-122.5637,note:"Free park-and-ride. MAX Red/Blue Line. Close to Dharma Rain area."},
-  {title:"Lewis & Clark College Visitor Parking",address:"615 S Palatine Hill Rd, Portland, OR 97219",lat:45.4505,lng:-122.6720,note:"On-site visitor parking for Lewis & Clark College events."},
-  {title:"Willamette Park Lot",address:"6500 S Macadam Ave, Portland, OR 97219",lat:45.4793,lng:-122.6712,note:"Free parking on-site at Willamette Park."},
-  {title:"Lents Park Street Parking",address:"SE 92nd Ave, Portland, OR 97266",lat:45.4905,lng:-122.5710,note:"Free street parking surrounding Lents Park."}
+  {title:"SmartPark — SW 10th & Yamhill",address:"730 SW 10th Ave, Portland, OR 97205",lat:45.5195,lng:-122.6837,note:"City garage · $2.20/hr weekdays (first 4 hrs) · $7 flat Sat/Sun · Open 24/7 · Near PAE, UpStart, Midtown Beer Garden · 180+ downtown businesses offer validation"},
+  {title:"SmartPark — SW 4th & Yamhill",address:"800 SW 4th Ave, Portland, OR 97204",lat:45.5183,lng:-122.6775,note:"City garage · $2.20/hr weekdays (first 4 hrs) · $7 flat Sat/Sun · Open 24/7 · Central downtown · Near PAE, Hungry Tiger, Place to B"},
+  {title:"SmartPark — SW 3rd & Alder",address:"333 SW 3rd Ave, Portland, OR 97204",lat:45.5210,lng:-122.6740,note:"City garage · $2.20/hr weekdays (first 4 hrs) · $7 flat Sat/Sun · Open 24/7 · Walking distance to most SW events"},
+  {title:"SmartPark — Naito & Davis",address:"40 SW Naito Pkwy, Portland, OR 97204",lat:45.5228,lng:-122.6740,note:"City garage · $2.20/hr weekdays (first 4 hrs) · $7 flat Sat/Sun · Open 24/7 · Near Waterfront Park emergency assembly"},
+  {title:"SmartPark — O'Bryant Square (NW Park & Davis)",address:"806 SW Park Ave, Portland, OR 97205",lat:45.5215,lng:-122.6827,note:"City garage · $2.20/hr weekdays (first 4 hrs) · $7 flat Sat/Sun · Open 24/7 · Near Director Park, Pioneer Square, Mission Theater"},
+  {title:"NW Pettygrove Street Parking",address:"NW 21st Ave & NW Pettygrove St, Portland, OR 97210",lat:45.5300,lng:-122.6900,note:"On-street meters · $3.00/hr Mon–Sat 8am–7pm · Free evenings & Sundays · Near Mission Theater, Hostel Cafe, Vestas · Confirm current rate at meter"},
+  {title:"Lloyd District — NE Grand Ave Parking",address:"NE Grand Ave & NE Multnomah St, Portland, OR 97232",lat:45.5292,lng:-122.6551,note:"On-street & surface lots · ~$2–3/hr · Near Metro Regional Government · MAX Red/Blue Line adjacent · Confirm current rate at meter"},
+  {title:"SE Morrison & 12th Surface Lot",address:"1200 SE Morrison St, Portland, OR 97214",lat:45.5175,lng:-122.6540,note:"Private lot · Confirm current pricing at entrance · Near Hungry Tiger, Sunnyside Community Center, Place to B"},
+  {title:"N Mississippi Ave Street Parking",address:"N Mississippi Ave, Portland, OR 97227",lat:45.5480,lng:-122.6760,note:"Free street parking most hours · Check signs for time limits · Near Future ReUse Builders, Sincere Studio, all Mississippi Ave events"},
+  {title:"Expo Center MAX Park & Ride",address:"2060 N Marine Dr, Portland, OR 97217",lat:45.5950,lng:-122.6880,note:"FREE park-and-ride · MAX Yellow Line to downtown in ~20 min · No daily limit · Great option for all N Portland events"},
+  {title:"Sunset TC MAX Park & Ride",address:"3205 SW Cedar Hills Blvd, Beaverton, OR 97005",lat:45.5197,lng:-122.7697,note:"FREE park-and-ride · MAX Blue Line direct to downtown Portland (~25 min) · Large capacity · Great for SW and downtown events"},
+  {title:"Gateway TC MAX Park & Ride",address:"NE 99th Ave & Pacific St, Portland, OR 97220",lat:45.5285,lng:-122.5637,note:"FREE park-and-ride · MAX Red/Blue Line to downtown · Near Dharma Rain Zen Center event · Large capacity"},
+  {title:"Lewis & Clark College Visitor Parking",address:"615 S Palatine Hill Rd, Portland, OR 97219",lat:45.4505,lng:-122.6720,note:"On-site visitor lot · Free for event visitors · Jul 13 event: Fall in Love with the Future"},
+  {title:"Willamette Park On-Site Lot",address:"6500 S Macadam Ave, Portland, OR 97219",lat:45.4793,lng:-122.6712,note:"Free on-site parking · Jul 13 event: Circular Economy Discussion · Limited spaces — arrive early"},
+  {title:"SE Foster Rd Street Parking",address:"SE Foster Rd & SE 72nd Ave, Portland, OR 97206",lat:45.4960,lng:-122.5740,note:"Free street parking · Near Lents Park & Kindness Farm events · Check signs for restrictions"},
+  {title:"Hillsboro Downtown Parking",address:"E Main St, Hillsboro, OR 97123",lat:45.5228,lng:-122.9870,note:"Free city parking lots adjacent to Farmers Market · Jul 18 event: Westside Sustainable Living Fair"}
 ];
 
-// ═══════════════════════════════════════════════════════════════
-// EVACUATION ASSEMBLY POINTS — key emergency gathering locations
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+// EVACUATION — per event cluster
+// ═══════════════════════════════════════════════════
 const EVACUATION = [
-  {title:"Emergency Assembly — Tom McCall Waterfront Park",address:"98 SW Naito Pkwy, Portland, OR 97204",lat:45.5131,lng:-122.6706,note:"Primary downtown emergency assembly area. Open space along the river."},
-  {title:"Emergency Assembly — Director Park",address:"SW Park Ave & SW Yamhill St, Portland, OR 97205",lat:45.5195,lng:-122.6818,note:"Central downtown open plaza. Good landmark for SW event attendees."},
-  {title:"Emergency Assembly — Pioneer Courthouse Square",address:"701 SW 6th Ave, Portland, OR 97204",lat:45.5202,lng:-122.6782,note:"Heart of downtown. Known by all. Primary rally point for central events."},
-  {title:"Emergency Assembly — Holladay Park",address:"NE 11th Ave & NE Holladay St, Portland, OR 97232",lat:45.5272,lng:-122.6560,note:"Assembly point for Lloyd District / Metro Regional Government area."},
-  {title:"Emergency Assembly — Irving Park",address:"NE 7th Ave & NE Fremont St, Portland, OR 97212",lat:45.5440,lng:-122.6570,note:"North/NE Portland assembly. Near CoHousing, Solar Home events."},
-  {title:"Emergency Assembly — Kenton Park",address:"N Denver Ave & N Willis Blvd, Portland, OR 97217",lat:45.5760,lng:-122.6940,note:"Assembly for North Portland events — Energy Empowerment area."},
-  {title:"Emergency Assembly — Lents Park Open Field",address:"SE 92nd Ave, Portland, OR 97266",lat:45.4897,lng:-122.5695,note:"SE Portland assembly. Open field inside Lents Park."},
-  {title:"Emergency Assembly — George Himes Park",address:"SW Terwilliger Blvd, Portland, OR 97239",lat:45.4760,lng:-122.6980,note:"SW Portland/Hillsdale assembly for SW event cluster."},
-  {title:"Emergency Assembly — Columbia Park",address:"N Lombard St & N Woolsey Ave, Portland, OR 97203",lat:45.5913,lng:-122.7105,note:"North Portland open space. Secondary assembly for Energy Empowerment area."},
-  // Key hospital / emergency services markers
-  {title:"OHSU — Oregon Health & Science University",address:"3181 SW Sam Jackson Park Rd, Portland, OR 97239",lat:45.4987,lng:-122.6853,note:"Nearest major trauma center for SW Portland events."},
-  {title:"Providence Portland Medical Center",address:"4805 NE Glisan St, Portland, OR 97213",lat:45.5235,lng:-122.6115,note:"Nearest major hospital for NE Portland events."},
-  {title:"Legacy Emanuel Medical Center",address:"2801 N Gantenbein Ave, Portland, OR 97227",lat:45.5463,lng:-122.6740,note:"Nearest hospital for N Portland / Mississippi Ave events."}
+  // Jul 9 — Dharma Rain Zen Center (NE Portland)
+  {title:"🚨 Evac — Dharma Rain Area: Glenhaven Park",address:"NE 82nd Ave & NE Glisan St, Portland, OR 97220",lat:45.5367,lng:-122.5770,note:"Nearest open assembly area for Dharma Rain Zen Center (Jul 9). Open field. 0.5 mi from venue."},
+  // Jul 12 — Latourell Falls (Columbia River Gorge)
+  {title:"🚨 Evac — Latourell Falls: Vista House Parking Area",address:"40700 Historic Columbia River Hwy, Corbett, OR 97019",lat:45.5398,lng:-122.2440,note:"Nearest large open area for Latourell Falls hike (Jul 12). Vista House lot, Crown Point. ~1.5 mi west."},
+  // Jul 13 — Lewis & Clark College (SW)
+  {title:"🚨 Evac — Lewis & Clark: Elk Rock Island Area",address:"SE 19th Ave & Sparrow St, Milwaukie, OR 97222",lat:45.4410,lng:-122.6590,note:"Open riverbank area. Nearest large outdoor assembly for Lewis & Clark College events (Jul 13)."},
+  // Jul 13 — Willamette Park
+  {title:"🚨 Evac — Willamette Park: South Lot Open Field",address:"6500 S Macadam Ave, Portland, OR 97219",lat:45.4770,lng:-122.6695,note:"Open field at south end of Willamette Park. On-site emergency assembly for Jul 13 Circular Economy event."},
+  // Jul 13 — Sunnyside Community Center (SE)
+  {title:"🚨 Evac — Sunnyside: Lone Fir Cemetery Open Path",address:"SE 20th Ave & SE Morrison St, Portland, OR 97214",lat:45.5163,lng:-122.6430,note:"Large open space 0.3 mi from Sunnyside Community Center. Assembly for Jul 13 Documentary event."},
+  // Jul 14 — Community Warehouse, Gresham
+  {title:"🚨 Evac — Gresham: Main City Park",address:"Powell Blvd & Main City Center, Gresham, OR 97030",lat:45.5022,lng:-122.4310,note:"Nearest open assembly for Community Warehouse event (Jul 14). Central Gresham park."},
+  // Jul 14 — Mississippi Ave cluster (multiple events)
+  {title:"🚨 Evac — Mississippi Ave: Overlook Park",address:"N Interstate Ave & N Skidmore St, Portland, OR 97217",lat:45.5510,lng:-122.6800,note:"Large open hilltop park. 0.4 mi from N Mississippi Ave events (Jul 14–18). Primary assembly for Mississippi Ave cluster."},
+  // Jul 14 — Energy Empowerment (N Portland)
+  {title:"🚨 Evac — N Portland: Columbia Park",address:"N Lombard St & N Woolsey Ave, Portland, OR 97203",lat:45.5913,lng:-122.7105,note:"Large N Portland open space. Assembly for Energy Empowerment event (Jul 14) at N Cutter Cir."},
+  // Jul 14 — Timberlab (NE Columbia)
+  {title:"🚨 Evac — Timberlab Area: Whitaker Ponds",address:"NE Columbia Blvd & NE 47th Ave, Portland, OR 97218",lat:45.5660,lng:-122.6300,note:"Nearest open natural area to Timberlab (Jul 14). Whitaker Ponds Nature Park, 0.6 mi east."},
+  // Jul 14 — McMenamins Mission Theater / NW events
+  {title:"🚨 Evac — NW Portland: Wallace Park",address:"NW 25th Ave & NW Raleigh St, Portland, OR 97210",lat:45.5313,lng:-122.7005,note:"Open park 0.5 mi from Mission Theater, Hostel Cafe, Vestas. Assembly for NW Portland events (Jul 14–16)."},
+  // Jul 14 — Place to B / SE 3rd
+  {title:"🚨 Evac — SE Inner: Tom McCall Waterfront Park",address:"98 SW Naito Pkwy, Portland, OR 97204",lat:45.5131,lng:-122.6706,note:"Primary open river assembly. 0.6 mi from Place to B & Audrey McCall Beach events (Jul 14)."},
+  // Jul 15 — Metro Regional Government (Lloyd)
+  {title:"🚨 Evac — Lloyd District: Holladay Park",address:"NE 11th Ave & NE Holladay St, Portland, OR 97232",lat:45.5272,lng:-122.6560,note:"Open park directly adjacent to Lloyd District events. Primary assembly for Metro Regional Government (Jul 15)."},
+  // Jul 15/16 — Downtown SW cluster (PAE, UpStart, Midtown)
+  {title:"🚨 Evac — Downtown: Pioneer Courthouse Square",address:"701 SW 6th Ave, Portland, OR 97204",lat:45.5202,lng:-122.6782,note:"Heart of downtown. Known landmark. Primary assembly for all downtown SW events Jul 15–16: PAE, UpStart, Midtown Beer Garden, Hungry Tiger."},
+  // Jul 16 — Pedalpalooza / Lents Park (SE)
+  {title:"🚨 Evac — Lents Area: Lents Park Open Field",address:"SE 92nd Ave, Portland, OR 97266",lat:45.4897,lng:-122.5695,note:"On-site assembly. Large open field within Lents Park. Jul 16 Pedalpalooza bike ride start/finish."},
+  // Jul 17 — Kindness Farm (SE outer)
+  {title:"🚨 Evac — SE Outer: Powell Butte Nature Park Trailhead",address:"SE Powell Blvd & SE 162nd Ave, Portland, OR 97236",lat:45.4897,lng:-122.5020,note:"Nearest large open area to Kindness Farm (Jul 17). 1.5 mi west of venue."},
+  // Jul 17 — Co-Housing (NE)
+  {title:"🚨 Evac — NE Portland: Irving Park",address:"NE 7th Ave & NE Fremont St, Portland, OR 97212",lat:45.5440,lng:-122.6570,note:"Open park 0.7 mi from Co-Housing tour at NE Going St (Jul 17)."},
+  // Jul 17 — SW Portland Embodied Carbon
+  {title:"🚨 Evac — SW Portland: George Himes Park",address:"SW Terwilliger Blvd, Portland, OR 97239",lat:45.4760,lng:-122.6980,note:"SW Portland open space. Assembly for Buildings/Embodied Carbon event (Jul 17)."},
+  // Jul 18 — Hillsboro Farmers Market
+  {title:"🚨 Evac — Hillsboro: Shute Park",address:"750 SE 8th Ave, Hillsboro, OR 97123",lat:45.5189,lng:-122.9720,note:"Large open park 0.5 mi from Hillsboro Farmers Market (Jul 18 Westside Sustainable Living Fair)."},
+  // Jul 18 — Sabin (NE) / SE events
+  {title:"🚨 Evac — NE Sabin Area: Grant Park",address:"NE 33rd Ave & NE Grant St, Portland, OR 97212",lat:45.5414,lng:-122.6392,note:"Open park 0.8 mi from Sabin Sun-Fun Day at NE 18th Ave (Jul 18)."},
+  // OHSU & hospitals for reference
+  {title:"🏥 Nearest Hospital: OHSU Trauma Center",address:"3181 SW Sam Jackson Park Rd, Portland, OR 97239",lat:45.4987,lng:-122.6853,note:"Oregon's Level 1 Trauma Center. Nearest major hospital for SW Portland events."},
+  {title:"🏥 Nearest Hospital: Providence Portland",address:"4805 NE Glisan St, Portland, OR 97213",lat:45.5235,lng:-122.6115,note:"Nearest major hospital for NE Portland events."},
+  {title:"🏥 Nearest Hospital: Legacy Emanuel",address:"2801 N Gantenbein Ave, Portland, OR 97227",lat:45.5463,lng:-122.6740,note:"Nearest hospital for N Portland / Mississippi Ave events."}
 ];
 
-// ═══════════════════════════════════════════════════════════════
-// SIGNAGE / MARKETING OPPORTUNITIES — placeholder partner locations
-// Update these with real confirmed business names as you secure them
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+// SIGNAGE / MARKETING OPPORTUNITIES
+// ═══════════════════════════════════════════════════
 const SIGNAGE = [
-  // Downtown SW cluster
-  {title:"📍 Signage Opportunity — SW 5th & Morrison",address:"SW 5th Ave & SW Morrison St, Portland, OR 97204",lat:45.5205,lng:-122.6765,note:"High foot traffic corner. Near PAE & UpStart Collective. Replace with confirmed business name."},
-  {title:"📍 Signage Opportunity — Powell's Books Area",address:"1005 W Burnside St, Portland, OR 97209",lat:45.5233,lng:-122.6815,note:"High visibility NW location. Near Mission Theater & Hostel Cafe events."},
-  {title:"📍 Signage Opportunity — NW 23rd Ave Corridor",address:"NW 23rd Ave & NW Kearney St, Portland, OR 97210",lat:45.5312,lng:-122.6992,note:"Busy retail corridor. Good for Slabtown & NW events."},
-  // NE / N cluster
-  {title:"📍 Signage Opportunity — N Mississippi Ave Shop",address:"3800 N Mississippi Ave, Portland, OR 97227",lat:45.5470,lng:-122.6755,note:"Independent retail strip. Near Future ReUse Builders & Sincere Studio."},
-  {title:"📍 Signage Opportunity — NE Alberta Arts District",address:"NE Alberta St & NE 30th Ave, Portland, OR 97211",lat:45.5594,lng:-122.6390,note:"High community engagement area. Near CoHousing event."},
-  {title:"📍 Signage Opportunity — NE Broadway Corridor",address:"NE Broadway & NE 15th Ave, Portland, OR 97232",lat:45.5355,lng:-122.6500,note:"Busy retail street. Near Lloyd District / Metro Gov events."},
-  // SE cluster
-  {title:"📍 Signage Opportunity — SE Division St",address:"SE Division St & SE 12th Ave, Portland, OR 97202",lat:45.5046,lng:-122.6530,note:"Popular SE restaurant & shop corridor. Near Place to B & Hungry Tiger."},
-  {title:"📍 Signage Opportunity — SE Hawthorne Blvd",address:"SE Hawthorne Blvd & SE 30th Ave, Portland, OR 97214",lat:45.5120,lng:-122.6330,note:"High foot traffic. Near Sunnyside Community Center & Social Good Place."},
-  {title:"📍 Signage Opportunity — SE Foster Road",address:"SE Foster Rd & SE 72nd Ave, Portland, OR 97206",lat:45.4960,lng:-122.5740,note:"Growing SE corridor. Near Lents Park & Kindness Farm events."},
-  // Outer / community
-  {title:"📍 Signage Opportunity — Gresham Downtown",address:"Powell Blvd & Main City Center, Gresham, OR 97030",lat:45.5022,lng:-122.4310,note:"Near Community Warehouse. Replace with confirmed local business."},
-  {title:"📍 Signage Opportunity — Hillsboro Main St",address:"E Main St & NE 2nd Ave, Hillsboro, OR 97123",lat:45.5228,lng:-122.9870,note:"Adjacent to Hillsboro Farmers Market event location."},
-  {title:"📍 Signage Opportunity — N Portland Community Hub",address:"N Interstate Ave & N Skidmore St, Portland, OR 97217",lat:45.5625,lng:-122.6750,note:"MAX Yellow Line corridor. High transit-rider visibility. Near Energy Empowerment."}
+  {title:"📍 Signage Opp — SW 5th & Morrison",address:"SW 5th Ave & SW Morrison St, Portland, OR 97204",lat:45.5205,lng:-122.6765,note:"High foot traffic corner. Near PAE & UpStart events. Replace with confirmed business name."},
+  {title:"📍 Signage Opp — Powell's Books Area",address:"1005 W Burnside St, Portland, OR 97209",lat:45.5233,lng:-122.6815,note:"High visibility NW. Near Mission Theater, Hostel Cafe, Vestas."},
+  {title:"📍 Signage Opp — NW 23rd Ave Corridor",address:"NW 23rd Ave & NW Kearney St, Portland, OR 97210",lat:45.5312,lng:-122.6992,note:"Busy retail corridor. Near NW Portland events and Slabtown."},
+  {title:"📍 Signage Opp — N Mississippi Ave Retail",address:"3800 N Mississippi Ave, Portland, OR 97227",lat:45.5470,lng:-122.6755,note:"Independent retail strip. Near Future ReUse Builders, Sincere Studio, all Mississippi Ave events."},
+  {title:"📍 Signage Opp — NE Alberta Arts District",address:"NE Alberta St & NE 30th Ave, Portland, OR 97211",lat:45.5594,lng:-122.6390,note:"High community engagement. Near Co-Housing tour."},
+  {title:"📍 Signage Opp — NE Broadway Corridor",address:"NE Broadway & NE 15th Ave, Portland, OR 97232",lat:45.5355,lng:-122.6500,note:"Busy retail street. Near Lloyd District / Metro Gov events."},
+  {title:"📍 Signage Opp — SE Division St",address:"SE Division St & SE 12th Ave, Portland, OR 97202",lat:45.5046,lng:-122.6530,note:"Popular SE restaurant corridor. Near Place to B & Hungry Tiger."},
+  {title:"📍 Signage Opp — SE Hawthorne Blvd",address:"SE Hawthorne Blvd & SE 30th Ave, Portland, OR 97214",lat:45.5120,lng:-122.6330,note:"High foot traffic. Near Sunnyside Community Center & Social Good Place events."},
+  {title:"📍 Signage Opp — SE Foster Road",address:"SE Foster Rd & SE 72nd Ave, Portland, OR 97206",lat:45.4960,lng:-122.5740,note:"Growing SE corridor. Near Lents Park & Kindness Farm events."},
+  {title:"📍 Signage Opp — Gresham Downtown",address:"Powell Blvd & Main City Center, Gresham, OR 97030",lat:45.5022,lng:-122.4310,note:"Near Community Warehouse (Jul 14). Replace with confirmed local business."},
+  {title:"📍 Signage Opp — Hillsboro Main St",address:"E Main St & NE 2nd Ave, Hillsboro, OR 97123",lat:45.5228,lng:-122.9870,note:"Adjacent to Hillsboro Farmers Market (Jul 18 Westside Sustainable Living Fair)."},
+  {title:"📍 Signage Opp — N Interstate MAX Corridor",address:"N Interstate Ave & N Skidmore St, Portland, OR 97217",lat:45.5625,lng:-122.6750,note:"MAX Yellow Line corridor. High transit-rider visibility. Near Energy Empowerment & N Portland events."}
 ];
 
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 // STATE
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+const DAYS = ["Thu","Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const DAY_LABELS = {Thu:"Thursday",Sun:"Sunday",Mon:"Monday",Tue:"Tuesday",Wed:"Wednesday",Fri:"Friday",Sat:"Saturday"};
+
 let map, infoWindow;
-let eventMarkers   = [];
-let parkingMarkers = [];
-let evacMarkers    = [];
-let signageMarkers = [];
-let trafficLayer   = null;
-let transitLayer   = null;
-let trafficOn  = false;
-let transitOn  = false;
-let parkingOn  = false;
-let evacOn     = false;
-let signageOn  = false;
-let activeTag     = null;
-let selectedIndex = null;
+let eventMarkers=[], parkingMarkers=[], evacMarkers=[], signageMarkers=[];
+let trafficLayer=null, transitLayer=null;
+let trafficOn=false, transitOn=false, parkingOn=false, evacOn=false, signageOn=false;
+let activeTag=null, activeDay=null, selectedIndex=null;
 
 const allTags = [...new Set(EVENTS.flatMap(e => e.tags))].sort();
+const allDays = [...new Set(EVENTS.map(e => e.day))];
 
-// ═══════════════════════════════════════════════════════════════
-// MARKER ICON HELPERS
-// ═══════════════════════════════════════════════════════════════
-function eventIcon()   { return { path: google.maps.SymbolPath.CIRCLE, fillColor:"#17C6A5", fillOpacity:1, strokeColor:"#00363A", strokeWeight:2, scale:9 }; }
-function parkingIcon() { return { path: google.maps.SymbolPath.CIRCLE, fillColor:"#8b5cf6", fillOpacity:1, strokeColor:"#ffffff", strokeWeight:2, scale:7 }; }
-function evacIcon()    { return { path: google.maps.SymbolPath.CIRCLE, fillColor:"#dc2626", fillOpacity:1, strokeColor:"#ffffff", strokeWeight:2, scale:7 }; }
-function signageIcon() { return { path: google.maps.SymbolPath.CIRCLE, fillColor:"#f59e0b", fillOpacity:1, strokeColor:"#ffffff", strokeWeight:2, scale:7 }; }
+// ═══════════════════════════════════════════════════
+// MARKER ICONS
+// ═══════════════════════════════════════════════════
+const icons = {
+  event:   () => ({path:google.maps.SymbolPath.CIRCLE,fillColor:"#17C6A5",fillOpacity:1,strokeColor:"#00363A",strokeWeight:2,scale:9}),
+  parking: () => ({path:google.maps.SymbolPath.CIRCLE,fillColor:"#8b5cf6",fillOpacity:1,strokeColor:"#fff",strokeWeight:2,scale:7}),
+  evac:    () => ({path:google.maps.SymbolPath.CIRCLE,fillColor:"#dc2626",fillOpacity:1,strokeColor:"#fff",strokeWeight:2,scale:7}),
+  signage: () => ({path:google.maps.SymbolPath.CIRCLE,fillColor:"#f59e0b",fillOpacity:1,strokeColor:"#fff",strokeWeight:2,scale:7})
+};
 
-// ═══════════════════════════════════════════════════════════════
-// INIT MAP — called by Google Maps API
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+// INIT MAP
+// ═══════════════════════════════════════════════════
 function initMap() {
-
   map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: 45.515, lng: -122.678 },
-    zoom: 11,
-    mapTypeControl: false,
-    streetViewControl: false,
-    fullscreenControl: true,
-    zoomControl: true,
-    styles: [
-      { featureType:"poi",          elementType:"labels",     stylers:[{visibility:"off"}] },
-      { featureType:"transit",      elementType:"labels",     stylers:[{visibility:"simplified"}] },
-      { featureType:"road",         elementType:"labels.icon",stylers:[{visibility:"off"}] },
-      { featureType:"landscape",    elementType:"geometry",   stylers:[{color:"#e4f0ed"}] },
-      { featureType:"water",        elementType:"geometry",   stylers:[{color:"#b8dde8"}] },
-      { featureType:"road.arterial",elementType:"geometry",   stylers:[{color:"#ffffff"}] },
-      { featureType:"road.local",   elementType:"geometry",   stylers:[{color:"#f4f7f5"}] }
+    center:{lat:45.515,lng:-122.678}, zoom:11,
+    mapTypeControl:false, streetViewControl:false, fullscreenControl:true, zoomControl:true,
+    styles:[
+      {featureType:"poi",elementType:"labels",stylers:[{visibility:"off"}]},
+      {featureType:"transit",elementType:"labels",stylers:[{visibility:"simplified"}]},
+      {featureType:"road",elementType:"labels.icon",stylers:[{visibility:"off"}]},
+      {featureType:"landscape",elementType:"geometry",stylers:[{color:"#e4f0ed"}]},
+      {featureType:"water",elementType:"geometry",stylers:[{color:"#b8dde8"}]},
+      {featureType:"road.arterial",elementType:"geometry",stylers:[{color:"#ffffff"}]},
+      {featureType:"road.local",elementType:"geometry",stylers:[{color:"#f4f7f5"}]}
     ]
   });
 
-  // Google Maps Platform traffic & transit layers
-  trafficLayer = new google.maps.TrafficLayer();  // live congestion
-  transitLayer = new google.maps.TransitLayer();  // TriMet MAX, bus, Streetcar
+  trafficLayer = new google.maps.TrafficLayer();
+  transitLayer = new google.maps.TransitLayer();
+  infoWindow   = new google.maps.InfoWindow();
 
-  infoWindow = new google.maps.InfoWindow();
-
-  // ── Event markers (always visible, filterable)
-  EVENTS.forEach((ev, i) => {
-    const m = new google.maps.Marker({ position:{lat:ev.lat,lng:ev.lng}, map, title:ev.title, icon:eventIcon() });
-    m.addListener("click", () => openEventInfo(i, m));
+  EVENTS.forEach((ev,i) => {
+    const m = new google.maps.Marker({position:{lat:ev.lat,lng:ev.lng},map,title:ev.title,icon:icons.event()});
+    m.addListener("click", () => openEventInfo(i,m));
     eventMarkers.push(m);
   });
 
-  // ── Parking markers (hidden by default)
   PARKING.forEach(p => {
-    const m = new google.maps.Marker({ position:{lat:p.lat,lng:p.lng}, map:null, title:p.title, icon:parkingIcon() });
-    m.addListener("click", () => openLayerInfo(p, "#8b5cf6", "🅿️ Parking"));
+    const m = new google.maps.Marker({position:{lat:p.lat,lng:p.lng},map:null,title:p.title,icon:icons.parking()});
+    m.addListener("click", () => openLayerInfo(p,"#8b5cf6","🅿️ Parking"));
     parkingMarkers.push(m);
   });
 
-  // ── Evacuation markers (hidden by default)
   EVACUATION.forEach(e => {
-    const m = new google.maps.Marker({ position:{lat:e.lat,lng:e.lng}, map:null, title:e.title, icon:evacIcon() });
-    m.addListener("click", () => openLayerInfo(e, "#dc2626", "🚨 Emergency"));
+    const m = new google.maps.Marker({position:{lat:e.lat,lng:e.lng},map:null,title:e.title,icon:icons.evac()});
+    m.addListener("click", () => openLayerInfo(e,"#dc2626","🚨 Emergency"));
     evacMarkers.push(m);
   });
 
-  // ── Signage opportunity markers (hidden by default)
   SIGNAGE.forEach(s => {
-    const m = new google.maps.Marker({ position:{lat:s.lat,lng:s.lng}, map:null, title:s.title, icon:signageIcon() });
-    m.addListener("click", () => openLayerInfo(s, "#f59e0b", "📍 Signage"));
+    const m = new google.maps.Marker({position:{lat:s.lat,lng:s.lng},map:null,title:s.title,icon:icons.signage()});
+    m.addListener("click", () => openLayerInfo(s,"#f59e0b","📍 Signage"));
     signageMarkers.push(m);
   });
 
+  buildDayBar();
   buildTagBar();
   buildEventList();
 
-  // ── Layer toggle button listeners ──
-  document.getElementById("btn-traffic").addEventListener("click", () => {
-    trafficOn = !trafficOn;
-    trafficLayer.setMap(trafficOn ? map : null);
-    document.getElementById("btn-traffic").classList.toggle("active", trafficOn);
-  });
-
-  document.getElementById("btn-transit").addEventListener("click", () => {
-    transitOn = !transitOn;
-    transitLayer.setMap(transitOn ? map : null);
-    document.getElementById("btn-transit").classList.toggle("active", transitOn);
-  });
-
-  document.getElementById("btn-parking").addEventListener("click", () => {
-    parkingOn = !parkingOn;
-    parkingMarkers.forEach(m => m.setMap(parkingOn ? map : null));
-    document.getElementById("btn-parking").classList.toggle("active", parkingOn);
-  });
-
-  document.getElementById("btn-evac").addEventListener("click", () => {
-    evacOn = !evacOn;
-    evacMarkers.forEach(m => m.setMap(evacOn ? map : null));
-    document.getElementById("btn-evac").classList.toggle("active", evacOn);
-  });
-
-  document.getElementById("btn-signage").addEventListener("click", () => {
-    signageOn = !signageOn;
-    signageMarkers.forEach(m => m.setMap(signageOn ? map : null));
-    document.getElementById("btn-signage").classList.toggle("active", signageOn);
-  });
+  document.getElementById("btn-traffic").addEventListener("click",()=>{ trafficOn=!trafficOn; trafficLayer.setMap(trafficOn?map:null); document.getElementById("btn-traffic").classList.toggle("active",trafficOn); });
+  document.getElementById("btn-transit").addEventListener("click",()=>{ transitOn=!transitOn; transitLayer.setMap(transitOn?map:null); document.getElementById("btn-transit").classList.toggle("active",transitOn); });
+  document.getElementById("btn-parking").addEventListener("click",()=>{ parkingOn=!parkingOn; parkingMarkers.forEach(m=>m.setMap(parkingOn?map:null)); document.getElementById("btn-parking").classList.toggle("active",parkingOn); });
+  document.getElementById("btn-evac").addEventListener("click",()=>{ evacOn=!evacOn; evacMarkers.forEach(m=>m.setMap(evacOn?map:null)); document.getElementById("btn-evac").classList.toggle("active",evacOn); });
+  document.getElementById("btn-signage").addEventListener("click",()=>{ signageOn=!signageOn; signageMarkers.forEach(m=>m.setMap(signageOn?map:null)); document.getElementById("btn-signage").classList.toggle("active",signageOn); });
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 // INFO WINDOWS
-// ═══════════════════════════════════════════════════════════════
-function openEventInfo(index, marker) {
-  const ev = EVENTS[index];
-  const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(ev.address)}`;
-  const tagsHtml = ev.tags.map(t => `<span class="gm-iw-tag">#${t}</span>`).join("");
+// ═══════════════════════════════════════════════════
+function openEventInfo(index,marker) {
+  const ev=EVENTS[index];
+  const url=`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(ev.address)}`;
+  const tags=ev.tags.map(t=>`<span class="gm-iw-tag">#${t}</span>`).join("");
   infoWindow.setContent(`
-    <div style="font-family:'Inter',sans-serif;max-width:260px;padding:4px 2px;">
+    <div style="font-family:'Inter',sans-serif;max-width:270px;padding:4px 2px;">
+      <div style="font-size:0.65rem;font-weight:700;background:#00363A;color:#17C6A5;display:inline-block;padding:2px 8px;border-radius:10px;margin-bottom:5px">${ev.day} · ${ev.date} · ${ev.time}</div>
       <div class="gm-iw-title">${ev.title}</div>
       <div class="gm-iw-addr">${ev.address}</div>
-      <div class="gm-iw-tags">${tagsHtml}</div>
-      <a class="gm-iw-dir" href="${mapsUrl}" target="_blank" rel="noopener">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
-        Get directions
+      <div class="gm-iw-tags">${tags}</div>
+      <a class="gm-iw-dir" href="${url}" target="_blank" rel="noopener">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>Get directions
       </a>
-    </div>
-  `);
-  infoWindow.open(map, marker);
-  document.querySelectorAll(".event-card").forEach(c => c.classList.remove("selected"));
-  const card = document.querySelector(`.event-card[data-index="${index}"]`);
-  if (card) { card.classList.add("selected"); card.scrollIntoView({block:"nearest",behavior:"smooth"}); }
-  selectedIndex = index;
+    </div>`);
+  infoWindow.open(map,marker);
+  document.querySelectorAll(".event-card").forEach(c=>c.classList.remove("selected"));
+  const card=document.querySelector(`.event-card[data-index="${index}"]`);
+  if(card){card.classList.add("selected");card.scrollIntoView({block:"nearest",behavior:"smooth"});}
+  selectedIndex=index;
 }
 
-function openLayerInfo(item, color, label) {
-  const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(item.address)}`;
+function openLayerInfo(item,color,label) {
+  const url=`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(item.address)}`;
   infoWindow.setContent(`
-    <div style="font-family:'Inter',sans-serif;max-width:260px;padding:4px 2px;">
-      <div style="display:inline-block;font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:12px;margin-bottom:6px;background:${color}22;color:${color}">${label}</div>
+    <div style="font-family:'Inter',sans-serif;max-width:270px;padding:4px 2px;">
+      <div style="font-size:0.63rem;font-weight:700;padding:2px 8px;border-radius:12px;margin-bottom:6px;background:${color}22;color:${color};display:inline-block">${label}</div>
       <div class="gm-iw-title">${item.title}</div>
       <div class="gm-iw-addr">${item.address}</div>
-      ${item.note ? `<div style="font-size:0.74rem;color:#6b7280;margin-bottom:8px;line-height:1.4;">${item.note}</div>` : ""}
-      <a class="gm-iw-dir" href="${mapsUrl}" target="_blank" rel="noopener">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
-        Get directions
+      <div class="gm-iw-note">${item.note}</div>
+      <a class="gm-iw-dir" href="${url}" target="_blank" rel="noopener">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>Get directions
       </a>
-    </div>
-  `);
+    </div>`);
   infoWindow.open(map);
 }
 
-// ═══════════════════════════════════════════════════════════════
-// HASHTAG FILTER BAR
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+// DAY FILTER BAR
+// ═══════════════════════════════════════════════════
+function buildDayBar() {
+  const bar=document.getElementById("day-bar");
+  const orderedDays=["Thu","Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  const uniqueDays=[...new Set(EVENTS.map(e=>e.day))];
+  // Sort by first appearance in schedule
+  const sorted=["Thu","Sun","Mon","Tue","Wed","Fri","Sat"].filter(d=>uniqueDays.includes(d));
+  sorted.forEach(day=>{
+    const count=EVENTS.filter(e=>e.day===day).length;
+    const pill=document.createElement("button");
+    pill.className="day-pill";
+    pill.dataset.day=day;
+    pill.innerHTML=`${day} <span style="opacity:0.6;font-weight:400">(${count})</span>`;
+    pill.addEventListener("click",()=>toggleDayFilter(day));
+    bar.appendChild(pill);
+  });
+}
+
+function toggleDayFilter(day) {
+  activeDay=activeDay===day?null:day;
+  document.querySelectorAll(".day-pill").forEach(p=>p.classList.toggle("active",p.dataset.day===activeDay));
+  applyFilters();
+}
+
+// ═══════════════════════════════════════════════════
+// TAG FILTER BAR
+// ═══════════════════════════════════════════════════
 function buildTagBar() {
-  const bar = document.getElementById("tag-bar");
-  bar.innerHTML = "";
-  allTags.forEach(tag => {
-    const pill = document.createElement("button");
-    pill.className = "tag-pill";
-    pill.textContent = "#" + tag;
-    pill.dataset.tag = tag;
-    pill.addEventListener("click", () => toggleTagFilter(tag));
+  const bar=document.getElementById("tag-bar");
+  allTags.forEach(tag=>{
+    const pill=document.createElement("button");
+    pill.className="tag-pill";
+    pill.textContent="#"+tag;
+    pill.dataset.tag=tag;
+    pill.addEventListener("click",()=>toggleTagFilter(tag));
     bar.appendChild(pill);
   });
 }
 
 function toggleTagFilter(tag) {
-  activeTag = activeTag === tag ? null : tag;
-  document.querySelectorAll(".tag-pill").forEach(p => p.classList.toggle("active", p.dataset.tag === activeTag));
+  activeTag=activeTag===tag?null:tag;
+  document.querySelectorAll(".tag-pill").forEach(p=>p.classList.toggle("active",p.dataset.tag===activeTag));
   applyFilters();
 }
 
-// ═══════════════════════════════════════════════════════════════
-// EVENT LIST + FILTERING
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+// FILTER + EVENT LIST
+// ═══════════════════════════════════════════════════
 function buildEventList() { applyFilters(); }
 
 function applyFilters() {
-  const query    = document.getElementById("search-box").value.trim().toLowerCase();
-  const list     = document.getElementById("event-list");
-  const noRes    = document.getElementById("no-results");
-  const resetBtn = document.getElementById("reset-filters");
+  const query=document.getElementById("search-box").value.trim().toLowerCase();
+  const list=document.getElementById("event-list");
+  const noRes=document.getElementById("no-results");
+  const resetBtn=document.getElementById("reset-filters");
+  list.innerHTML="";
+  let visible=0;
 
-  list.innerHTML = "";
-  let visible = 0;
-
-  EVENTS.forEach((ev, i) => {
-    const tagMatch   = !activeTag || ev.tags.includes(activeTag);
-    const allText    = (ev.title + " " + ev.address + " " + ev.tags.map(t => "#" + t).join(" ")).toLowerCase();
-    const queryMatch = !query || allText.includes(query);
-    const show = tagMatch && queryMatch;
-
+  EVENTS.forEach((ev,i)=>{
+    const tagMatch=!activeTag||ev.tags.includes(activeTag);
+    const dayMatch=!activeDay||ev.day===activeDay;
+    const allText=(ev.title+" "+ev.address+" "+ev.day+" "+ev.date+" "+ev.time+" "+ev.tags.map(t=>"#"+t).join(" ")).toLowerCase();
+    const queryMatch=!query||allText.includes(query);
+    const show=tagMatch&&dayMatch&&queryMatch;
     eventMarkers[i].setVisible(show);
-    if (!show) return;
-
+    if(!show) return;
     visible++;
-    const card = document.createElement("div");
-    card.className = "event-card";
-    card.dataset.index = i;
-    if (selectedIndex === i) card.classList.add("selected");
 
-    const mapsUrl  = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(ev.address)}`;
-    const tagsHtml = ev.tags.map(t => {
-      return `<span class="event-tag${t === activeTag ? " highlight" : ""}" data-tag="${t}">#${t}</span>`;
-    }).join("");
+    const card=document.createElement("div");
+    card.className="event-card";
+    card.dataset.index=i;
+    if(selectedIndex===i) card.classList.add("selected");
 
-    card.innerHTML = `
+    const url=`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(ev.address)}`;
+    const tagsHtml=ev.tags.map(t=>`<span class="event-tag${t===activeTag?" highlight":""}" data-tag="${t}">#${t}</span>`).join("");
+
+    card.innerHTML=`
+      <div class="event-datetime">
+        <span class="event-day-badge">${ev.day} ${ev.date}</span>
+        <span class="event-time">${ev.time}</span>
+      </div>
       <div class="event-name">${ev.title}</div>
       <div class="event-address">${ev.address}</div>
       <div class="event-tags">${tagsHtml}</div>
-      <a class="directions-btn" href="${mapsUrl}" target="_blank" rel="noopener">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
-        Directions
-      </a>
-    `;
+      <a class="directions-btn" href="${url}" target="_blank" rel="noopener">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>Directions
+      </a>`;
 
-    card.addEventListener("click", (e) => {
-      if (e.target.closest("a") || e.target.closest(".event-tag")) return;
-      map.panTo({ lat: ev.lat, lng: ev.lng });
+    card.addEventListener("click",(e)=>{
+      if(e.target.closest("a")||e.target.closest(".event-tag")) return;
+      map.panTo({lat:ev.lat,lng:ev.lng});
       map.setZoom(14);
-      openEventInfo(i, eventMarkers[i]);
+      openEventInfo(i,eventMarkers[i]);
     });
 
-    card.querySelectorAll(".event-tag").forEach(t => {
-      t.addEventListener("click", (e) => { e.stopPropagation(); toggleTagFilter(t.dataset.tag); });
+    card.querySelectorAll(".event-tag").forEach(t=>{
+      t.addEventListener("click",(e)=>{e.stopPropagation();toggleTagFilter(t.dataset.tag);});
     });
 
     list.appendChild(card);
   });
 
-  const hasFilter = activeTag || query;
-  document.getElementById("results-count").textContent = `${visible} event${visible !== 1 ? "s" : ""}`;
-  document.getElementById("header-count").textContent  = `${visible} event${visible !== 1 ? "s" : ""}`;
-  noRes.style.display    = visible === 0 ? "block" : "none";
-  resetBtn.style.display = hasFilter ? "inline" : "none";
-  document.getElementById("clear-search").style.display = query ? "block" : "none";
+  const hasFilter=activeTag||activeDay||query;
+  document.getElementById("results-count").textContent=`${visible} event${visible!==1?"s":""}`;
+  document.getElementById("header-count").textContent=`${visible} event${visible!==1?"s":""}`;
+  noRes.style.display=visible===0?"block":"none";
+  resetBtn.style.display=hasFilter?"inline":"none";
+  document.getElementById("clear-search").style.display=query?"block":"none";
 }
 
-// Search listeners
-document.getElementById("search-box").addEventListener("input", applyFilters);
-document.getElementById("clear-search").addEventListener("click", () => {
-  document.getElementById("search-box").value = "";
-  applyFilters();
-});
-document.getElementById("reset-filters").addEventListener("click", () => {
-  activeTag = null;
-  document.getElementById("search-box").value = "";
-  document.querySelectorAll(".tag-pill").forEach(p => p.classList.remove("active"));
+document.getElementById("search-box").addEventListener("input",applyFilters);
+document.getElementById("clear-search").addEventListener("click",()=>{document.getElementById("search-box").value="";applyFilters();});
+document.getElementById("reset-filters").addEventListener("click",()=>{
+  activeTag=null;activeDay=null;
+  document.getElementById("search-box").value="";
+  document.querySelectorAll(".tag-pill,.day-pill").forEach(p=>p.classList.remove("active"));
   applyFilters();
 });
 </script>
 
-<!-- Load Google Maps Platform API -->
+<!-- Google Maps Platform API -->
 <script>
 (function() {
-  const key = "AIzaSyDhEupZREgJIawXjvI9zmwO7DmVS8sInT8";
-  const s   = document.createElement("script");
-  s.src     = `https://maps.googleapis.com/maps/api/js?key=${key}&callback=initMap`;
-  s.async   = true;
+  const key="AIzaSyDhEupZREgJIawXjvI9zmwO7DmVS8sInT8";
+  const s=document.createElement("script");
+  s.src=`https://maps.googleapis.com/maps/api/js?key=${key}&callback=initMap`;
+  s.async=true;
   document.head.appendChild(s);
 })();
 </script>
-
 </body>
 </html>
-ENDOFFILE
-echo "Done — $(wc -l < /mnt/user-data/outputs/pnw-climate-week-map.html) lines"
