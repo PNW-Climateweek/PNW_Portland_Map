@@ -9,18 +9,21 @@
 
   <style>
     :root {
-      --forest:  #1a3a2a;
-      --moss:    #2d6a4f;
-      --fern:    #52b788;
-      --mist:    #d8f3dc;
-      --slate:   #2b2d42;
-      --fog:     #f4f7f5;
-      --white:   #ffffff;
-      --text:    #1c1e2a;
-      --muted:   #6b7280;
-      --border:  #dde5e0;
-      --radius:  10px;
-      --panel:   320px;
+      /* ── PNW Climate Week Official Brand Colors ── */
+      --pnw-dark:   #00363A;   /* dark teal — backgrounds, header */
+      --pnw-mid:    #0E7F6C;   /* mid green — buttons, accents */
+      --pnw-bright: #17C6A5;   /* bright mint — highlights, active states */
+      --pnw-white:  #ffffff;
+      --pnw-mist:   #d6f5ef;   /* tinted mint for tag backgrounds */
+
+      /* UI neutrals */
+      --text:   #1c1e2a;
+      --muted:  #6b7280;
+      --border: #dde5e0;
+      --fog:    #f3f8f7;
+
+      --radius: 10px;
+      --panel:  330px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,37 +40,79 @@
 
     /* ── Header ── */
     header {
-      background: var(--forest);
-      color: var(--white);
-      padding: 12px 20px;
+      background: var(--pnw-dark);
+      color: var(--pnw-white);
+      padding: 10px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
       flex-shrink: 0;
       z-index: 10;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
     }
-    .header-left { display: flex; align-items: center; gap: 12px; }
-    .logo-mark {
-      width: 36px; height: 36px;
-      background: var(--fern);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; flex-shrink: 0;
+
+    .header-left { display: flex; align-items: center; gap: 14px; }
+
+    /* PNW Logo mark — text-based to match brand style */
+    .logo-lockup {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
     }
-    .header-title h1 {
+    .logo-pnw {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1rem; font-weight: 700; line-height: 1.2; color: var(--white);
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: var(--pnw-bright);
+      letter-spacing: -0.02em;
+      line-height: 1;
     }
-    .header-title p {
-      font-size: 0.72rem; color: var(--fern); font-weight: 500;
-      letter-spacing: 0.04em; text-transform: uppercase;
+    .logo-pnw span {
+      display: inline-block;
+      color: var(--pnw-bright);
+      font-size: 1.1rem;
+      vertical-align: super;
+      margin-left: 1px;
     }
+    .logo-climateweek {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--pnw-white);
+      margin-top: 1px;
+    }
+    .logo-dates {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+      color: var(--pnw-bright);
+      margin-top: 2px;
+    }
+
+    .header-right { display: flex; align-items: center; gap: 10px; }
+
     .event-count-badge {
-      background: var(--fern); color: var(--forest);
-      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
-      font-size: 0.8rem; padding: 4px 10px; border-radius: 20px; white-space: nowrap;
+      background: var(--pnw-bright);
+      color: var(--pnw-dark);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding: 4px 11px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .header-subtitle {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.55);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
     }
 
     /* ── Layout ── */
@@ -75,19 +120,24 @@
 
     /* ── Sidebar ── */
     .sidebar {
-      width: var(--panel); flex-shrink: 0;
-      display: flex; flex-direction: column;
-      background: var(--white);
+      width: var(--panel);
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      background: var(--pnw-white);
       border-right: 1px solid var(--border);
-      overflow: hidden; z-index: 5;
+      overflow: hidden;
+      z-index: 5;
     }
+
+    /* Search */
     .search-wrap { padding: 14px 14px 0; }
     .search-input-row {
       display: flex; align-items: center; gap: 8px;
       background: var(--fog); border: 1.5px solid var(--border);
       border-radius: var(--radius); padding: 0 12px; transition: border-color 0.2s;
     }
-    .search-input-row:focus-within { border-color: var(--fern); background: var(--white); }
+    .search-input-row:focus-within { border-color: var(--pnw-bright); background: var(--pnw-white); }
     .search-input-row svg { color: var(--muted); flex-shrink: 0; }
     #search-box {
       flex: 1; border: none; background: transparent; padding: 10px 0;
@@ -99,11 +149,26 @@
       color: var(--muted); font-size: 1rem; line-height: 1; padding: 2px; display: none;
     }
 
+    /* Layer legend in sidebar */
+    .layer-legend {
+      padding: 10px 14px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 0.68rem; font-weight: 600; color: var(--muted);
+    }
+    .legend-dot {
+      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+    }
+
     /* Hashtag filter bar */
     .filter-section { padding: 10px 14px 0; }
     .filter-label {
-      font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.06em; color: var(--muted); margin-bottom: 7px;
+      font-size: 0.68rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--muted); margin-bottom: 6px;
     }
     .tag-scroller {
       display: flex; gap: 6px; overflow-x: auto;
@@ -112,12 +177,12 @@
     .tag-scroller::-webkit-scrollbar { display: none; }
     .tag-pill {
       flex-shrink: 0; background: var(--fog); border: 1.5px solid var(--border);
-      color: var(--slate); font-size: 0.72rem; font-weight: 600;
+      color: var(--text); font-size: 0.7rem; font-weight: 600;
       padding: 4px 10px; border-radius: 20px; cursor: pointer;
       transition: all 0.15s; white-space: nowrap; user-select: none;
     }
-    .tag-pill:hover { border-color: var(--fern); color: var(--moss); background: var(--mist); }
-    .tag-pill.active { background: var(--moss); border-color: var(--moss); color: var(--white); }
+    .tag-pill:hover { border-color: var(--pnw-bright); color: var(--pnw-mid); background: var(--pnw-mist); }
+    .tag-pill.active { background: var(--pnw-mid); border-color: var(--pnw-mid); color: var(--pnw-white); }
 
     /* Results bar */
     .results-bar {
@@ -126,7 +191,7 @@
     }
     .results-bar span { font-size: 0.75rem; color: var(--muted); font-weight: 500; }
     #reset-filters {
-      font-size: 0.72rem; color: var(--moss); font-weight: 600;
+      font-size: 0.72rem; color: var(--pnw-mid); font-weight: 600;
       background: none; border: none; cursor: pointer; display: none;
     }
     #reset-filters:hover { text-decoration: underline; }
@@ -142,10 +207,10 @@
       transition: background 0.12s; position: relative;
     }
     .event-card:hover { background: var(--fog); }
-    .event-card.selected { background: var(--mist); }
+    .event-card.selected { background: var(--pnw-mist); }
     .event-card.selected::before {
       content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-      width: 3px; background: var(--fern);
+      width: 3px; background: var(--pnw-bright);
     }
     .event-name {
       font-family: 'Space Grotesk', sans-serif; font-size: 0.875rem;
@@ -154,19 +219,19 @@
     .event-address { font-size: 0.75rem; color: var(--muted); margin-bottom: 7px; line-height: 1.4; }
     .event-tags { display: flex; flex-wrap: wrap; gap: 4px; }
     .event-tag {
-      font-size: 0.67rem; font-weight: 600; color: var(--moss);
-      background: var(--mist); padding: 2px 7px; border-radius: 12px;
+      font-size: 0.67rem; font-weight: 600; color: var(--pnw-mid);
+      background: var(--pnw-mist); padding: 2px 7px; border-radius: 12px;
       cursor: pointer; transition: background 0.1s;
     }
-    .event-tag:hover { background: #b7e4c7; }
-    .event-tag.highlight { background: var(--moss); color: var(--white); }
+    .event-tag:hover { background: #a7ebe0; }
+    .event-tag.highlight { background: var(--pnw-mid); color: var(--pnw-white); }
     .directions-btn {
       margin-top: 8px; display: inline-flex; align-items: center; gap: 5px;
-      font-size: 0.72rem; font-weight: 600; color: var(--white);
-      background: var(--moss); border: none; border-radius: 6px;
+      font-size: 0.72rem; font-weight: 600; color: var(--pnw-white);
+      background: var(--pnw-mid); border: none; border-radius: 6px;
       padding: 5px 10px; cursor: pointer; text-decoration: none; transition: background 0.15s;
     }
-    .directions-btn:hover { background: var(--forest); }
+    .directions-btn:hover { background: var(--pnw-dark); }
     .no-results {
       padding: 32px 20px; text-align: center;
       color: var(--muted); font-size: 0.875rem; display: none;
@@ -176,88 +241,105 @@
     #map-container { flex: 1; position: relative; }
     #map { width: 100%; height: 100%; }
 
-    /* ── Traffic / Transit Toggle Buttons ── */
+    /* ── Layer Toggle Controls (all 5) ── */
     .map-layer-controls {
       position: absolute;
-      top: 12px;
-      right: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+      top: 12px; right: 12px;
+      display: flex; flex-direction: column; gap: 6px;
       z-index: 5;
     }
     .layer-btn {
       display: flex; align-items: center; gap: 7px;
-      background: var(--white); border: 2px solid var(--border);
+      background: var(--pnw-white); border: 2px solid var(--border);
       border-radius: 8px; padding: 7px 12px;
-      font-family: 'Space Grotesk', sans-serif; font-size: 0.78rem; font-weight: 600;
-      color: var(--slate); cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif; font-size: 0.76rem; font-weight: 600;
+      color: var(--text); cursor: pointer;
       box-shadow: 0 2px 6px rgba(0,0,0,0.12);
       transition: all 0.15s; white-space: nowrap; user-select: none;
     }
-    .layer-btn:hover { border-color: var(--fern); color: var(--moss); }
+    .layer-btn:hover { border-color: var(--pnw-bright); color: var(--pnw-mid); }
     .layer-btn.active {
-      background: var(--moss); border-color: var(--moss); color: var(--white);
-      box-shadow: 0 2px 8px rgba(45,106,79,0.35);
+      background: var(--pnw-dark); border-color: var(--pnw-dark); color: var(--pnw-white);
+      box-shadow: 0 2px 8px rgba(0,54,58,0.35);
     }
     .layer-dot {
-      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; transition: background 0.15s;
+      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
     }
-    #btn-traffic .layer-dot { background: #e07a2f; }
-    #btn-traffic.active .layer-dot { background: #ffcc00; }
-    #btn-transit .layer-dot { background: #1967d2; }
-    #btn-transit.active .layer-dot { background: #74c0fc; }
+    /* Each layer has its own dot color */
+    #btn-traffic .layer-dot  { background: #e07a2f; }
+    #btn-transit .layer-dot  { background: #1967d2; }
+    #btn-parking .layer-dot  { background: #8b5cf6; }
+    #btn-evac .layer-dot     { background: #dc2626; }
+    #btn-signage .layer-dot  { background: #f59e0b; }
 
     /* Info window */
     .gm-iw-title {
       font-family: 'Space Grotesk', sans-serif; font-weight: 700;
-      font-size: 0.95rem; color: var(--text); margin-bottom: 4px;
+      font-size: 0.92rem; color: var(--text); margin-bottom: 3px;
     }
-    .gm-iw-addr { font-size: 0.78rem; color: var(--muted); margin-bottom: 8px; }
-    .gm-iw-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
+    .gm-iw-addr { font-size: 0.76rem; color: var(--muted); margin-bottom: 7px; }
+    .gm-iw-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 9px; }
     .gm-iw-tag {
-      font-size: 0.65rem; font-weight: 700; color: var(--moss);
-      background: var(--mist); padding: 2px 7px; border-radius: 12px;
+      font-size: 0.64rem; font-weight: 700; color: var(--pnw-mid);
+      background: var(--pnw-mist); padding: 2px 7px; border-radius: 12px;
+    }
+    .gm-iw-badge {
+      display: inline-block; font-size: 0.64rem; font-weight: 700;
+      padding: 2px 8px; border-radius: 12px; margin-bottom: 7px;
     }
     .gm-iw-dir {
       display: inline-flex; align-items: center; gap: 5px;
-      font-size: 0.75rem; font-weight: 600; color: var(--white);
-      background: var(--moss); padding: 6px 12px; border-radius: 6px; text-decoration: none;
+      font-size: 0.74rem; font-weight: 600; color: var(--pnw-white);
+      background: var(--pnw-mid); padding: 6px 12px; border-radius: 6px; text-decoration: none;
     }
-    .gm-iw-dir:hover { background: var(--forest); }
+    .gm-iw-dir:hover { background: var(--pnw-dark); }
 
     /* Mobile */
     @media (max-width: 640px) {
       .app-body { flex-direction: column; }
-      .sidebar { width: 100%; height: 42dvh; border-right: none; border-bottom: 1px solid var(--border); }
+      .sidebar { width: 100%; height: 44dvh; border-right: none; border-bottom: 1px solid var(--border); }
       #map-container { flex: 1; }
       :root { --panel: 100%; }
+      .header-subtitle { display: none; }
     }
   </style>
 </head>
 <body>
 
+<!-- ── Header with PNW Climate Week Branding ── -->
 <header>
   <div class="header-left">
-    <div class="logo-mark">🌲</div>
-    <div class="header-title">
-      <h1>PNW Climate Week Portland</h1>
-      <p>Interactive Event Locator</p>
+    <div class="logo-lockup">
+      <div class="logo-pnw">PNW<span>🌲</span></div>
+      <div class="logo-climateweek">Climate Week</div>
+      <div class="logo-dates">July 13–19, 2026 · Portland, OR</div>
     </div>
   </div>
-  <div class="event-count-badge" id="header-count">33 events</div>
+  <div class="header-right">
+    <span class="header-subtitle">Interactive Event Map</span>
+    <div class="event-count-badge" id="header-count">33 events</div>
+  </div>
 </header>
 
 <div class="app-body">
 
-  <!-- Sidebar -->
+  <!-- ── Sidebar ── -->
   <aside class="sidebar">
+
     <div class="search-wrap">
       <div class="search-input-row">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input id="search-box" type="search" placeholder="Search events or #hashtags…" autocomplete="off">
         <button id="clear-search" title="Clear">✕</button>
       </div>
+    </div>
+
+    <!-- Map layer legend -->
+    <div class="layer-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#17C6A5"></div>Events</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>Parking</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div>Evacuation</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Signage</div>
     </div>
 
     <div class="filter-section">
@@ -272,19 +354,27 @@
 
     <div class="event-list" id="event-list"></div>
     <div class="no-results" id="no-results">No events match — try a different search or tag.</div>
+
   </aside>
 
-  <!-- Map + Layer Toggle Buttons -->
+  <!-- ── Map + All Layer Toggle Buttons ── -->
   <div id="map-container">
     <div id="map"></div>
     <div class="map-layer-controls">
       <button class="layer-btn" id="btn-traffic">
-        <span class="layer-dot"></span>
-        🚦 Traffic
+        <span class="layer-dot"></span>🚦 Traffic
       </button>
       <button class="layer-btn" id="btn-transit">
-        <span class="layer-dot"></span>
-        🚌 Transit
+        <span class="layer-dot"></span>🚌 Transit
+      </button>
+      <button class="layer-btn" id="btn-parking">
+        <span class="layer-dot"></span>🅿️ Parking
+      </button>
+      <button class="layer-btn" id="btn-evac">
+        <span class="layer-dot"></span>🚨 Evacuation
+      </button>
+      <button class="layer-btn" id="btn-signage">
+        <span class="layer-dot"></span>📍 Signage Opps
       </button>
     </div>
   </div>
@@ -292,7 +382,9 @@
 </div>
 
 <script>
-// ── EVENT DATA ───────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════
+// EVENT DATA — 33 PNW Climate Week events
+// ═══════════════════════════════════════════════════════════════
 const EVENTS = [
   {title:"Dharma Rain Zen Center",address:"8500 NE Siskiyou St, Portland, OR 97220",lat:45.5428,lng:-122.5748,tags:["ClimateAction","CommunityResilience"]},
   {title:"Latourell Falls",address:"Historic Columbia River Hwy, Corbett, OR 97019",lat:45.5382,lng:-122.2177,tags:["Nature","Hiking","Networking"]},
@@ -329,22 +421,100 @@ const EVENTS = [
   {title:"Global Shocks, Local Tables",address:"NW Portland (TBC)",lat:45.5300,lng:-122.6900,tags:["FoodJustice","SmallholderFarmers","Resilience"]}
 ];
 
-// ── STATE ────────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════
+// PARKING DATA — public garages & MAX park-and-rides near events
+// ═══════════════════════════════════════════════════════════════
+const PARKING = [
+  {title:"Smart Park — SW 10th & Yamhill",address:"730 SW 10th Ave, Portland, OR 97205",lat:45.5195,lng:-122.6837,note:"City-owned garage, 24/7. Close to PAE, UpStart, Midtown Beer Garden."},
+  {title:"Smart Park — SW 4th & Yamhill",address:"800 SW 4th Ave, Portland, OR 97204",lat:45.5183,lng:-122.6775,note:"City-owned garage. Central downtown. Near PAE, Hungry Tiger, Place to B."},
+  {title:"Smart Park — SW 3rd & Alder",address:"333 SW 3rd Ave, Portland, OR 97204",lat:45.5210,lng:-122.6740,note:"Downtown core. Walking distance to most SW events."},
+  {title:"NW Pettygrove Garage",address:"2136 NW Pettygrove St, Portland, OR 97210",lat:45.5300,lng:-122.6900,note:"Convenient for Mission Theater, Hostel Cafe, Vestas."},
+  {title:"Lloyd District Garage",address:"815 NE Multnomah St, Portland, OR 97232",lat:45.5292,lng:-122.6551,note:"Near Metro Regional Government. MAX Red/Blue line adjacent."},
+  {title:"SE Morrison & 12th Surface Lot",address:"1200 SE Morrison St, Portland, OR 97214",lat:45.5175,lng:-122.6540,note:"Near Hungry Tiger, Sunnyside Community Center."},
+  {title:"N Mississippi Ave Street Parking",address:"N Mississippi Ave, Portland, OR 97227",lat:45.5480,lng:-122.6760,note:"Free street parking near Future ReUse Builders & Sincere Studio."},
+  {title:"Expo Center MAX Park & Ride",address:"2060 N Marine Dr, Portland, OR 97217",lat:45.5950,lng:-122.6880,note:"Free MAX park-and-ride. Yellow Line to downtown in 20 min."},
+  {title:"Sunset TC MAX Park & Ride",address:"3205 SW Cedar Hills Blvd, Beaverton, OR 97005",lat:45.5197,lng:-122.7697,note:"Free park-and-ride. MAX Blue Line direct to downtown Portland."},
+  {title:"Gateway TC MAX Park & Ride",address:"NE 99th Ave & Pacific St, Portland, OR 97220",lat:45.5285,lng:-122.5637,note:"Free park-and-ride. MAX Red/Blue Line. Close to Dharma Rain area."},
+  {title:"Lewis & Clark College Visitor Parking",address:"615 S Palatine Hill Rd, Portland, OR 97219",lat:45.4505,lng:-122.6720,note:"On-site visitor parking for Lewis & Clark College events."},
+  {title:"Willamette Park Lot",address:"6500 S Macadam Ave, Portland, OR 97219",lat:45.4793,lng:-122.6712,note:"Free parking on-site at Willamette Park."},
+  {title:"Lents Park Street Parking",address:"SE 92nd Ave, Portland, OR 97266",lat:45.4905,lng:-122.5710,note:"Free street parking surrounding Lents Park."}
+];
+
+// ═══════════════════════════════════════════════════════════════
+// EVACUATION ASSEMBLY POINTS — key emergency gathering locations
+// ═══════════════════════════════════════════════════════════════
+const EVACUATION = [
+  {title:"Emergency Assembly — Tom McCall Waterfront Park",address:"98 SW Naito Pkwy, Portland, OR 97204",lat:45.5131,lng:-122.6706,note:"Primary downtown emergency assembly area. Open space along the river."},
+  {title:"Emergency Assembly — Director Park",address:"SW Park Ave & SW Yamhill St, Portland, OR 97205",lat:45.5195,lng:-122.6818,note:"Central downtown open plaza. Good landmark for SW event attendees."},
+  {title:"Emergency Assembly — Pioneer Courthouse Square",address:"701 SW 6th Ave, Portland, OR 97204",lat:45.5202,lng:-122.6782,note:"Heart of downtown. Known by all. Primary rally point for central events."},
+  {title:"Emergency Assembly — Holladay Park",address:"NE 11th Ave & NE Holladay St, Portland, OR 97232",lat:45.5272,lng:-122.6560,note:"Assembly point for Lloyd District / Metro Regional Government area."},
+  {title:"Emergency Assembly — Irving Park",address:"NE 7th Ave & NE Fremont St, Portland, OR 97212",lat:45.5440,lng:-122.6570,note:"North/NE Portland assembly. Near CoHousing, Solar Home events."},
+  {title:"Emergency Assembly — Kenton Park",address:"N Denver Ave & N Willis Blvd, Portland, OR 97217",lat:45.5760,lng:-122.6940,note:"Assembly for North Portland events — Energy Empowerment area."},
+  {title:"Emergency Assembly — Lents Park Open Field",address:"SE 92nd Ave, Portland, OR 97266",lat:45.4897,lng:-122.5695,note:"SE Portland assembly. Open field inside Lents Park."},
+  {title:"Emergency Assembly — George Himes Park",address:"SW Terwilliger Blvd, Portland, OR 97239",lat:45.4760,lng:-122.6980,note:"SW Portland/Hillsdale assembly for SW event cluster."},
+  {title:"Emergency Assembly — Columbia Park",address:"N Lombard St & N Woolsey Ave, Portland, OR 97203",lat:45.5913,lng:-122.7105,note:"North Portland open space. Secondary assembly for Energy Empowerment area."},
+  // Key hospital / emergency services markers
+  {title:"OHSU — Oregon Health & Science University",address:"3181 SW Sam Jackson Park Rd, Portland, OR 97239",lat:45.4987,lng:-122.6853,note:"Nearest major trauma center for SW Portland events."},
+  {title:"Providence Portland Medical Center",address:"4805 NE Glisan St, Portland, OR 97213",lat:45.5235,lng:-122.6115,note:"Nearest major hospital for NE Portland events."},
+  {title:"Legacy Emanuel Medical Center",address:"2801 N Gantenbein Ave, Portland, OR 97227",lat:45.5463,lng:-122.6740,note:"Nearest hospital for N Portland / Mississippi Ave events."}
+];
+
+// ═══════════════════════════════════════════════════════════════
+// SIGNAGE / MARKETING OPPORTUNITIES — placeholder partner locations
+// Update these with real confirmed business names as you secure them
+// ═══════════════════════════════════════════════════════════════
+const SIGNAGE = [
+  // Downtown SW cluster
+  {title:"📍 Signage Opportunity — SW 5th & Morrison",address:"SW 5th Ave & SW Morrison St, Portland, OR 97204",lat:45.5205,lng:-122.6765,note:"High foot traffic corner. Near PAE & UpStart Collective. Replace with confirmed business name."},
+  {title:"📍 Signage Opportunity — Powell's Books Area",address:"1005 W Burnside St, Portland, OR 97209",lat:45.5233,lng:-122.6815,note:"High visibility NW location. Near Mission Theater & Hostel Cafe events."},
+  {title:"📍 Signage Opportunity — NW 23rd Ave Corridor",address:"NW 23rd Ave & NW Kearney St, Portland, OR 97210",lat:45.5312,lng:-122.6992,note:"Busy retail corridor. Good for Slabtown & NW events."},
+  // NE / N cluster
+  {title:"📍 Signage Opportunity — N Mississippi Ave Shop",address:"3800 N Mississippi Ave, Portland, OR 97227",lat:45.5470,lng:-122.6755,note:"Independent retail strip. Near Future ReUse Builders & Sincere Studio."},
+  {title:"📍 Signage Opportunity — NE Alberta Arts District",address:"NE Alberta St & NE 30th Ave, Portland, OR 97211",lat:45.5594,lng:-122.6390,note:"High community engagement area. Near CoHousing event."},
+  {title:"📍 Signage Opportunity — NE Broadway Corridor",address:"NE Broadway & NE 15th Ave, Portland, OR 97232",lat:45.5355,lng:-122.6500,note:"Busy retail street. Near Lloyd District / Metro Gov events."},
+  // SE cluster
+  {title:"📍 Signage Opportunity — SE Division St",address:"SE Division St & SE 12th Ave, Portland, OR 97202",lat:45.5046,lng:-122.6530,note:"Popular SE restaurant & shop corridor. Near Place to B & Hungry Tiger."},
+  {title:"📍 Signage Opportunity — SE Hawthorne Blvd",address:"SE Hawthorne Blvd & SE 30th Ave, Portland, OR 97214",lat:45.5120,lng:-122.6330,note:"High foot traffic. Near Sunnyside Community Center & Social Good Place."},
+  {title:"📍 Signage Opportunity — SE Foster Road",address:"SE Foster Rd & SE 72nd Ave, Portland, OR 97206",lat:45.4960,lng:-122.5740,note:"Growing SE corridor. Near Lents Park & Kindness Farm events."},
+  // Outer / community
+  {title:"📍 Signage Opportunity — Gresham Downtown",address:"Powell Blvd & Main City Center, Gresham, OR 97030",lat:45.5022,lng:-122.4310,note:"Near Community Warehouse. Replace with confirmed local business."},
+  {title:"📍 Signage Opportunity — Hillsboro Main St",address:"E Main St & NE 2nd Ave, Hillsboro, OR 97123",lat:45.5228,lng:-122.9870,note:"Adjacent to Hillsboro Farmers Market event location."},
+  {title:"📍 Signage Opportunity — N Portland Community Hub",address:"N Interstate Ave & N Skidmore St, Portland, OR 97217",lat:45.5625,lng:-122.6750,note:"MAX Yellow Line corridor. High transit-rider visibility. Near Energy Empowerment."}
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
 let map, infoWindow;
-let markers       = [];
-let trafficLayer  = null;
-let transitLayer  = null;
-let trafficOn     = false;
-let transitOn     = false;
+let eventMarkers   = [];
+let parkingMarkers = [];
+let evacMarkers    = [];
+let signageMarkers = [];
+let trafficLayer   = null;
+let transitLayer   = null;
+let trafficOn  = false;
+let transitOn  = false;
+let parkingOn  = false;
+let evacOn     = false;
+let signageOn  = false;
 let activeTag     = null;
 let selectedIndex = null;
 
 const allTags = [...new Set(EVENTS.flatMap(e => e.tags))].sort();
 
-// ── MAP INIT (called by Google Maps script) ──────────────────────────────────
+// ═══════════════════════════════════════════════════════════════
+// MARKER ICON HELPERS
+// ═══════════════════════════════════════════════════════════════
+function eventIcon()   { return { path: google.maps.SymbolPath.CIRCLE, fillColor:"#17C6A5", fillOpacity:1, strokeColor:"#00363A", strokeWeight:2, scale:9 }; }
+function parkingIcon() { return { path: google.maps.SymbolPath.CIRCLE, fillColor:"#8b5cf6", fillOpacity:1, strokeColor:"#ffffff", strokeWeight:2, scale:7 }; }
+function evacIcon()    { return { path: google.maps.SymbolPath.CIRCLE, fillColor:"#dc2626", fillOpacity:1, strokeColor:"#ffffff", strokeWeight:2, scale:7 }; }
+function signageIcon() { return { path: google.maps.SymbolPath.CIRCLE, fillColor:"#f59e0b", fillOpacity:1, strokeColor:"#ffffff", strokeWeight:2, scale:7 }; }
+
+// ═══════════════════════════════════════════════════════════════
+// INIT MAP — called by Google Maps API
+// ═══════════════════════════════════════════════════════════════
 function initMap() {
 
-  // 1. Create the map centred on Portland, OR
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 45.515, lng: -122.678 },
     zoom: 11,
@@ -353,88 +523,130 @@ function initMap() {
     fullscreenControl: true,
     zoomControl: true,
     styles: [
-      { featureType:"poi",          elementType:"labels",    stylers:[{visibility:"off"}] },
-      { featureType:"transit",      elementType:"labels",    stylers:[{visibility:"simplified"}] },
+      { featureType:"poi",          elementType:"labels",     stylers:[{visibility:"off"}] },
+      { featureType:"transit",      elementType:"labels",     stylers:[{visibility:"simplified"}] },
       { featureType:"road",         elementType:"labels.icon",stylers:[{visibility:"off"}] },
-      { featureType:"landscape",    elementType:"geometry",  stylers:[{color:"#e8f0eb"}] },
-      { featureType:"water",        elementType:"geometry",  stylers:[{color:"#c2dfe8"}] },
-      { featureType:"road.arterial",elementType:"geometry",  stylers:[{color:"#ffffff"}] },
-      { featureType:"road.local",   elementType:"geometry",  stylers:[{color:"#f4f7f5"}] }
+      { featureType:"landscape",    elementType:"geometry",   stylers:[{color:"#e4f0ed"}] },
+      { featureType:"water",        elementType:"geometry",   stylers:[{color:"#b8dde8"}] },
+      { featureType:"road.arterial",elementType:"geometry",   stylers:[{color:"#ffffff"}] },
+      { featureType:"road.local",   elementType:"geometry",   stylers:[{color:"#f4f7f5"}] }
     ]
   });
 
-  // 2. Create Traffic and Transit layers (Google Maps Platform API)
-  //    Both start OFF — users toggle them with the buttons in the top-right corner
-  trafficLayer = new google.maps.TrafficLayer();   // live congestion colours
-  transitLayer = new google.maps.TransitLayer();   // TriMet MAX, bus, Streetcar
+  // Google Maps Platform traffic & transit layers
+  trafficLayer = new google.maps.TrafficLayer();  // live congestion
+  transitLayer = new google.maps.TransitLayer();  // TriMet MAX, bus, Streetcar
 
-  // 3. Info window (shared, one at a time)
   infoWindow = new google.maps.InfoWindow();
 
-  // 4. Drop a marker for every event
-  EVENTS.forEach((event, i) => {
-    const marker = new google.maps.Marker({
-      position: { lat: event.lat, lng: event.lng },
-      map,
-      title: event.title,
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        fillColor: "#2d6a4f",
-        fillOpacity: 1,
-        strokeColor: "#ffffff",
-        strokeWeight: 2,
-        scale: 8
-      }
-    });
-    marker.addListener("click", () => openInfoWindow(i, marker));
-    markers.push(marker);
+  // ── Event markers (always visible, filterable)
+  EVENTS.forEach((ev, i) => {
+    const m = new google.maps.Marker({ position:{lat:ev.lat,lng:ev.lng}, map, title:ev.title, icon:eventIcon() });
+    m.addListener("click", () => openEventInfo(i, m));
+    eventMarkers.push(m);
   });
 
-  // 5. Build sidebar
+  // ── Parking markers (hidden by default)
+  PARKING.forEach(p => {
+    const m = new google.maps.Marker({ position:{lat:p.lat,lng:p.lng}, map:null, title:p.title, icon:parkingIcon() });
+    m.addListener("click", () => openLayerInfo(p, "#8b5cf6", "🅿️ Parking"));
+    parkingMarkers.push(m);
+  });
+
+  // ── Evacuation markers (hidden by default)
+  EVACUATION.forEach(e => {
+    const m = new google.maps.Marker({ position:{lat:e.lat,lng:e.lng}, map:null, title:e.title, icon:evacIcon() });
+    m.addListener("click", () => openLayerInfo(e, "#dc2626", "🚨 Emergency"));
+    evacMarkers.push(m);
+  });
+
+  // ── Signage opportunity markers (hidden by default)
+  SIGNAGE.forEach(s => {
+    const m = new google.maps.Marker({ position:{lat:s.lat,lng:s.lng}, map:null, title:s.title, icon:signageIcon() });
+    m.addListener("click", () => openLayerInfo(s, "#f59e0b", "📍 Signage"));
+    signageMarkers.push(m);
+  });
+
   buildTagBar();
   buildEventList();
 
-  // 6. Wire up Traffic toggle button
+  // ── Layer toggle button listeners ──
   document.getElementById("btn-traffic").addEventListener("click", () => {
     trafficOn = !trafficOn;
     trafficLayer.setMap(trafficOn ? map : null);
     document.getElementById("btn-traffic").classList.toggle("active", trafficOn);
   });
 
-  // 7. Wire up Transit toggle button
   document.getElementById("btn-transit").addEventListener("click", () => {
     transitOn = !transitOn;
     transitLayer.setMap(transitOn ? map : null);
     document.getElementById("btn-transit").classList.toggle("active", transitOn);
   });
+
+  document.getElementById("btn-parking").addEventListener("click", () => {
+    parkingOn = !parkingOn;
+    parkingMarkers.forEach(m => m.setMap(parkingOn ? map : null));
+    document.getElementById("btn-parking").classList.toggle("active", parkingOn);
+  });
+
+  document.getElementById("btn-evac").addEventListener("click", () => {
+    evacOn = !evacOn;
+    evacMarkers.forEach(m => m.setMap(evacOn ? map : null));
+    document.getElementById("btn-evac").classList.toggle("active", evacOn);
+  });
+
+  document.getElementById("btn-signage").addEventListener("click", () => {
+    signageOn = !signageOn;
+    signageMarkers.forEach(m => m.setMap(signageOn ? map : null));
+    document.getElementById("btn-signage").classList.toggle("active", signageOn);
+  });
 }
 
-// ── INFO WINDOW ──────────────────────────────────────────────────────────────
-function openInfoWindow(index, marker) {
+// ═══════════════════════════════════════════════════════════════
+// INFO WINDOWS
+// ═══════════════════════════════════════════════════════════════
+function openEventInfo(index, marker) {
   const ev = EVENTS[index];
   const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(ev.address)}`;
   const tagsHtml = ev.tags.map(t => `<span class="gm-iw-tag">#${t}</span>`).join("");
-
   infoWindow.setContent(`
     <div style="font-family:'Inter',sans-serif;max-width:260px;padding:4px 2px;">
       <div class="gm-iw-title">${ev.title}</div>
       <div class="gm-iw-addr">${ev.address}</div>
       <div class="gm-iw-tags">${tagsHtml}</div>
       <a class="gm-iw-dir" href="${mapsUrl}" target="_blank" rel="noopener">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
         Get directions
       </a>
     </div>
   `);
   infoWindow.open(map, marker);
-
   document.querySelectorAll(".event-card").forEach(c => c.classList.remove("selected"));
   const card = document.querySelector(`.event-card[data-index="${index}"]`);
-  if (card) { card.classList.add("selected"); card.scrollIntoView({ block:"nearest", behavior:"smooth" }); }
+  if (card) { card.classList.add("selected"); card.scrollIntoView({block:"nearest",behavior:"smooth"}); }
   selectedIndex = index;
 }
 
-// ── HASHTAG FILTER BAR ───────────────────────────────────────────────────────
+function openLayerInfo(item, color, label) {
+  const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(item.address)}`;
+  infoWindow.setContent(`
+    <div style="font-family:'Inter',sans-serif;max-width:260px;padding:4px 2px;">
+      <div style="display:inline-block;font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:12px;margin-bottom:6px;background:${color}22;color:${color}">${label}</div>
+      <div class="gm-iw-title">${item.title}</div>
+      <div class="gm-iw-addr">${item.address}</div>
+      ${item.note ? `<div style="font-size:0.74rem;color:#6b7280;margin-bottom:8px;line-height:1.4;">${item.note}</div>` : ""}
+      <a class="gm-iw-dir" href="${mapsUrl}" target="_blank" rel="noopener">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+        Get directions
+      </a>
+    </div>
+  `);
+  infoWindow.open(map);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// HASHTAG FILTER BAR
+// ═══════════════════════════════════════════════════════════════
 function buildTagBar() {
   const bar = document.getElementById("tag-bar");
   bar.innerHTML = "";
@@ -454,7 +666,9 @@ function toggleTagFilter(tag) {
   applyFilters();
 }
 
-// ── EVENT LIST + FILTERING ───────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════
+// EVENT LIST + FILTERING
+// ═══════════════════════════════════════════════════════════════
 function buildEventList() { applyFilters(); }
 
 function applyFilters() {
@@ -467,12 +681,12 @@ function applyFilters() {
   let visible = 0;
 
   EVENTS.forEach((ev, i) => {
-    const tagMatch  = !activeTag || ev.tags.includes(activeTag);
-    const allText   = (ev.title + " " + ev.address + " " + ev.tags.map(t => "#" + t).join(" ")).toLowerCase();
+    const tagMatch   = !activeTag || ev.tags.includes(activeTag);
+    const allText    = (ev.title + " " + ev.address + " " + ev.tags.map(t => "#" + t).join(" ")).toLowerCase();
     const queryMatch = !query || allText.includes(query);
     const show = tagMatch && queryMatch;
 
-    markers[i].setVisible(show);
+    eventMarkers[i].setVisible(show);
     if (!show) return;
 
     visible++;
@@ -483,8 +697,7 @@ function applyFilters() {
 
     const mapsUrl  = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(ev.address)}`;
     const tagsHtml = ev.tags.map(t => {
-      const isActive = t === activeTag;
-      return `<span class="event-tag${isActive ? " highlight" : ""}" data-tag="${t}">#${t}</span>`;
+      return `<span class="event-tag${t === activeTag ? " highlight" : ""}" data-tag="${t}">#${t}</span>`;
     }).join("");
 
     card.innerHTML = `
@@ -501,7 +714,7 @@ function applyFilters() {
       if (e.target.closest("a") || e.target.closest(".event-tag")) return;
       map.panTo({ lat: ev.lat, lng: ev.lng });
       map.setZoom(14);
-      openInfoWindow(i, markers[i]);
+      openEventInfo(i, eventMarkers[i]);
     });
 
     card.querySelectorAll(".event-tag").forEach(t => {
@@ -519,14 +732,12 @@ function applyFilters() {
   document.getElementById("clear-search").style.display = query ? "block" : "none";
 }
 
-// Search
+// Search listeners
 document.getElementById("search-box").addEventListener("input", applyFilters);
 document.getElementById("clear-search").addEventListener("click", () => {
   document.getElementById("search-box").value = "";
   applyFilters();
 });
-
-// Reset all filters
 document.getElementById("reset-filters").addEventListener("click", () => {
   activeTag = null;
   document.getElementById("search-box").value = "";
@@ -535,7 +746,7 @@ document.getElementById("reset-filters").addEventListener("click", () => {
 });
 </script>
 
-<!-- Load Google Maps Platform API — calls initMap() when ready -->
+<!-- Load Google Maps Platform API -->
 <script>
 (function() {
   const key = "AIzaSyDhEupZREgJIawXjvI9zmwO7DmVS8sInT8";
@@ -549,4 +760,4 @@ document.getElementById("reset-filters").addEventListener("click", () => {
 </body>
 </html>
 ENDOFFILE
-echo "Done"
+echo "Done — $(wc -l < /mnt/user-data/outputs/pnw-climate-week-map.html) lines"
