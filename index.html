@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
   <title>PNW Climate Week Portland — Event Map</title>
@@ -113,7 +113,6 @@
     #btn-transit .layer-dot{background:#1967d2}
     #btn-parking .layer-dot{background:#8b5cf6}
     #btn-evac .layer-dot{background:#dc2626}
-    #btn-signage .layer-dot{background:#f59e0b}
 
     /* INFO WINDOW */
     .gm-iw-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.92rem;color:var(--text);margin-bottom:2px}
@@ -143,7 +142,7 @@
   </div>
   <div class="header-right">
     <span class="header-subtitle">July 13–19, 2026 · Event Map</span>
-    <div class="event-count-badge" id="header-count">37 events</div>
+    <div class="event-count-badge" id="header-count">57 events</div>
   </div>
 </header>
 
@@ -175,11 +174,10 @@
       <div class="legend-item"><div class="legend-dot" style="background:#17C6A5"></div>Events</div>
       <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>Parking</div>
       <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div>Evacuation</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Signage</div>
     </div>
 
     <div class="results-bar">
-      <span id="results-count">37 events</span>
+      <span id="results-count">57 events</span>
       <button id="reset-filters">Reset all filters</button>
     </div>
 
@@ -205,7 +203,6 @@
         <button class="layer-btn" id="btn-transit"><span class="layer-dot"></span>🚌 Transit</button>
         <button class="layer-btn" id="btn-parking"><span class="layer-dot"></span>🅿️ Parking</button>
         <button class="layer-btn" id="btn-evac"><span class="layer-dot"></span>🚨 Evacuation</button>
-        <button class="layer-btn" id="btn-signage"><span class="layer-dot"></span>📍 Signage Opps</button>
       </div>
     </div>
   </div>
@@ -213,46 +210,85 @@
 
 <script>
 // ═══════════════════════════════════════════════════
-// EVENT DATA — with date, day, time
+// EVENT DATA — 57 events, Jul 11–20, 2026
 // ═══════════════════════════════════════════════════
 const EVENTS = [
-  {title:"Rumble on the River: We're Not Gonna Take the Heat!",date:"Jul 9",day:"Thu",time:"5:00 PM",address:"8500 NE Siskiyou St, Portland, OR 97220",lat:45.5428,lng:-122.5748,tags:["ClimateAction","CommunityResilience"]},
-  {title:"PNW Climate Week Hike and Network",date:"Jul 12",day:"Sun",time:"9:00 AM",address:"Historic Columbia River Hwy, Corbett, OR 97019",lat:45.5382,lng:-122.2177,tags:["Nature","Hiking","Networking"]},
-  {title:"Fall in Love with the Future: Empowering Local Climate Action",date:"Jul 13",day:"Mon",time:"9:00 AM",address:"615 S Palatine Hill Rd, Portland, OR 97219",lat:45.4500,lng:-122.6700,tags:["ClimateEducation","Policy","Youth"]},
-  {title:"Intro To The Circular Economy & Collaborative Discussion On Waste",date:"Jul 13",day:"Mon",time:"6:00 PM",address:"6500 S Macadam Ave, Portland, OR 97219",lat:45.4790,lng:-122.6700,tags:["CircularEconomy","ZeroWaste","Community"]},
-  {title:"NW Documentary: Local Films about Climate Solutions",date:"Jul 13",day:"Mon",time:"7:00 PM",address:"3520 SE Yamhill St, Portland, OR 97214",lat:45.5160,lng:-122.6270,tags:["ClimateDoc","Storytelling","LocalSolutions"]},
-  {title:"Give it a Second Life: PNW Climate Week at the Furniture Bank",date:"Jul 14",day:"Tue",time:"9:00 AM",address:"464 NE 219th Ave, Gresham, OR 97030",lat:45.5280,lng:-122.4370,tags:["Reuse","CircularEconomy"]},
-  {title:"PNW Climate Week + PDX Pride: Networking Mixer",date:"Jul 14",day:"Tue",time:"11:00 AM",address:"Eliot Neighborhood, Portland, OR (TBC)",lat:45.5400,lng:-122.6600,tags:["Pride","LGBTQ","Networking","Climate"]},
+  // ── Jul 11, Friday (Pre-Week) ──
+  {title:"Village Building Convergence 26",date:"Jul 11",day:"Fri",time:"11:00 AM",address:"Portland, OR (register for address)",lat:45.5200,lng:-122.6800,tags:["Community","CommunityResilience","LocalSolutions"]},
+
+  // ── Jul 12, Sunday ──
+  {title:"PNW Climate Week Hike and Network",date:"Jul 12",day:"Sun",time:"9:00 AM",address:"Latourell Falls, Historic Columbia River Hwy, Corbett, OR 97019",lat:45.5382,lng:-122.2177,tags:["Nature","Hiking","Networking"]},
+
+  // ── Jul 13, Monday ──
+  {title:"Portland's Opening Event — Fall in Love with the Future",date:"Jul 13",day:"Mon",time:"9:00 AM",address:"Lewis & Clark College, 615 S Palatine Hill Rd, Portland, OR 97219",lat:45.4500,lng:-122.6700,tags:["ClimateEducation","Policy","Youth","Featured"]},
+  {title:"The Future of Low-Waste Events (Bold Reuse x Bridge 13)",date:"Jul 13",day:"Mon",time:"5:00 PM",address:"Portland Metro Chamber, 121 SW Salmon St #1440, Portland, OR 97204",lat:45.5167,lng:-122.6741,tags:["ZeroWaste","CircularEconomy","Networking"]},
+  {title:"Graham Zimmerman Keynote: Piolet d'Or Winning Alpinist",date:"Jul 13",day:"Mon",time:"5:30 PM",address:"Agnes Flanagan Chapel, 615 S Palatine Hill Rd, Portland, OR 97219",lat:45.4502,lng:-122.6698,tags:["ClimateAction","Keynote","Nature"]},
+  {title:"Intro To The Circular Economy & Collaborative Discussion On Waste",date:"Jul 13",day:"Mon",time:"6:00 PM",address:"Willamette Park, 6500 S Macadam Ave, Portland, OR 97219",lat:45.4790,lng:-122.6700,tags:["CircularEconomy","ZeroWaste","Community"]},
+  {title:"Evening Yoga Flow",date:"Jul 13",day:"Mon",time:"6:00 PM",address:"Lower Macleay Park, 2960 NW Upshur St, Portland, OR 97210",lat:45.5358,lng:-122.7147,tags:["Wellness","Nature","Community"]},
+  {title:"NW Documentary: Other Side of the Hill + 360 Films",date:"Jul 13",day:"Mon",time:"6:30 PM",address:"Sunnyside Community Center, 3520 SE Yamhill St, Portland, OR 97214",lat:45.5160,lng:-122.6270,tags:["ClimateDoc","Storytelling","LocalSolutions"]},
+
+  // ── Jul 14, Tuesday ──
+  {title:"Give it a Second Life: PNW Climate Week at the Furniture Bank",date:"Jul 14",day:"Tue",time:"9:00 AM",address:"Community Warehouse, 464 NE 219th Ave, Gresham, OR 97030",lat:45.5280,lng:-122.4370,tags:["Reuse","CircularEconomy"]},
+  {title:"What's Next? Oregon Climate Reporters on the Stories to Watch",date:"Jul 14",day:"Tue",time:"10:30 AM",address:"1050 SW 6th Ave, Portland, OR 97204",lat:45.5183,lng:-122.6779,tags:["ClimateJournalism","Policy","LocalSolutions"]},
+  {title:"PNW Climate Week + PDX Pride: Networking Mixer",date:"Jul 14",day:"Tue",time:"11:00 AM",address:"Portland, OR (register for address)",lat:45.5400,lng:-122.6600,tags:["Pride","LGBTQ","Networking","Climate"]},
   {title:"Future ReUse Builders Story Time & Tool Petting Zoo",date:"Jul 14",day:"Tue",time:"12:00 PM",address:"3625 N Mississippi Ave, Portland, OR 97227",lat:45.5480,lng:-122.6750,tags:["Reuse","DIY","Youth","Education"]},
+  {title:"Sun, Soil & Sovereignty: Agrivoltaics Tour with SHEBA Farm",date:"Jul 14",day:"Tue",time:"1:00 PM",address:"North Willamette Research Center, 15210 NE Miley Rd, Aurora, OR 97002",lat:45.2290,lng:-122.7580,tags:["Solar","FoodJustice","AgriVoltaics","Equity"]},
+  {title:"Oregon's Regenerative Materials Showcase",date:"Jul 14",day:"Tue",time:"3:30 PM",address:"Timberlab, 1601 NE Columbia Blvd, Portland, OR 97211",lat:45.5600,lng:-122.6500,tags:["RegenerativeMaterials","MassTimber","Innovation"]},
   {title:"Energy Empowerment: Home Energy Solutions & Community Connections",date:"Jul 14",day:"Tue",time:"4:00 PM",address:"6844 N Cutter Cir, Portland, OR 97217",lat:45.5700,lng:-122.7000,tags:["EnergyEfficiency","HomeRetrofit","Community"]},
-  {title:"Oregon's Regenerative Materials Showcase",date:"Jul 14",day:"Tue",time:"4:30 PM",address:"1601 NE Columbia Blvd, Portland, OR 97211",lat:45.5600,lng:-122.6500,tags:["RegenerativeMaterials","MassTimber","Innovation"]},
-  {title:"The Future is Watching: Youth Film Screening + Panel",date:"Jul 14",day:"Tue",time:"5:00 PM",address:"1624 NW Glisan St, Portland, OR 97209",lat:45.5250,lng:-122.6880,tags:["Youth","Film","ClimateAction","Panel"]},
-  {title:"Deepening Your Capacity for Climate Leadership",date:"Jul 14",day:"Tue",time:"5:30 PM",address:"1661 SE 3rd Ave, Portland, OR 97214",lat:45.5120,lng:-122.6630,tags:["ClimateLeadership","ProfessionalDevelopment"]},
-  {title:"Tuesday Splashdown @ Audrey McCall Beach!",date:"Jul 14",day:"Tue",time:"5:30 PM",address:"Portland, OR",lat:45.5100,lng:-122.6740,tags:["Water","Community","ClimateResilience"]},
+  {title:"The Future is Watching: Youth Film Screening + Panel",date:"Jul 14",day:"Tue",time:"5:00 PM",address:"McMenamins Mission Theater, 1624 NW Glisan St, Portland, OR 97209",lat:45.5250,lng:-122.6880,tags:["Youth","Film","ClimateAction","Panel","Featured"]},
+  {title:"Data Center Building System Design for Energy & Water Efficiency",date:"Jul 14",day:"Tue",time:"5:00 PM",address:"151 SW 1st Ave Ste 300, Portland, OR 97204",lat:45.5200,lng:-122.6740,tags:["EnergyEfficiency","Buildings","CleanTech"]},
+  {title:"Deepening Your Capacity for Climate Leadership",date:"Jul 14",day:"Tue",time:"5:30 PM",address:"Place to B, 1661 SE 3rd Ave, Portland, OR 97214",lat:45.5120,lng:-122.6630,tags:["ClimateLeadership","ProfessionalDevelopment"]},
+  {title:"Tuesday Splashdown @ Audrey McCall Beach!",date:"Jul 14",day:"Tue",time:"5:30 PM",address:"Audrey McCall Beach, Portland, OR 97202",lat:45.5100,lng:-122.6740,tags:["Water","Community","ClimateResilience"]},
+  {title:"WIE Portland Celebrates PNW Climate Week — Networking Event",date:"Jul 14",day:"Tue",time:"5:30 PM",address:"Portland, OR (TBC)",lat:45.5200,lng:-122.6750,tags:["WomenInEnergy","Networking","CleanEnergy"]},
+
+  // ── Jul 15, Wednesday ──
   {title:"Reimagining & Repurposing: Giving Materials a Second Life",date:"Jul 15",day:"Wed",time:"12:00 PM",address:"3625 N Mississippi Ave, Portland, OR 97227",lat:45.5482,lng:-122.6752,tags:["Reuse","CircularEconomy","Education"]},
-  {title:"Metro Climate Lab: Powering Resilience with Bold Vision",date:"Jul 15",day:"Wed",time:"2:30 PM",address:"600 NE Grand Ave, Portland, OR 97232",lat:45.5280,lng:-122.6600,tags:["ClimateResilience","Investment","Policy"]},
-  {title:"Fleet Electrification Mixer: Connect with PNW Clean Transport",date:"Jul 15",day:"Wed",time:"3:00 PM",address:"213 SE 12th Ave, Portland, OR 97214",lat:45.5210,lng:-122.6540,tags:["EV","FleetElectrification","CleanTransport"]},
-  {title:"Confessions of a Pilot: How to Fly Better in a Climate Crisis",date:"Jul 15",day:"Wed",time:"4:30 PM",address:"151 SW 1st Ave, Portland, OR 97204",lat:45.5200,lng:-122.6740,tags:["Aviation","ClimateCrisis","SustainableTravel"]},
-  {title:"Community Mending and Sustainable Fashion at Sincere Studio",date:"Jul 15",day:"Wed",time:"6:00 PM",address:"2134 N Flint Ave, Portland, OR 97227",lat:45.5400,lng:-122.6720,tags:["SlowFashion","Mending","SustainableFashion"]},
-  {title:"Global Shocks, Local Tables: Why Smallholder Farmer Resilience Matters",date:"Jul 16",day:"Thu",time:"11:00 AM",address:"NW Portland (private location)",lat:45.5300,lng:-122.6900,tags:["FoodJustice","SmallholderFarmers","Resilience"]},
+  {title:"Building Resilience Together: Climate Innovation Roundtable",date:"Jul 15",day:"Wed",time:"1:00 PM",address:"Portland, OR (register for address)",lat:45.5200,lng:-122.6800,tags:["ClimateResilience","Innovation","Networking"]},
+  {title:"Metro Climate Lab: Powering Resilience with Bold Vision",date:"Jul 15",day:"Wed",time:"2:30 PM",address:"Metro Regional Government, 600 NE Grand Ave, Portland, OR 97232",lat:45.5280,lng:-122.6600,tags:["ClimateResilience","Investment","Policy"]},
+  {title:"Fleet Electrification Mixer: Connect with PNW Clean Transport",date:"Jul 15",day:"Wed",time:"3:00 PM",address:"Hungry Tiger, 213 SE 12th Ave, Portland, OR 97214",lat:45.5210,lng:-122.6540,tags:["EV","FleetElectrification","CleanTransport"]},
+  {title:"Where Communities Take Root: Depave on Green Infrastructure",date:"Jul 15",day:"Wed",time:"4:00 PM",address:"The Glass Lab, 350 SE Mill St, Portland, OR 97214",lat:45.5143,lng:-122.6618,tags:["GreenInfrastructure","Community","UrbanForestry"]},
+  {title:"PNW Climate Week Happy Hour: Climate Leadership in the PNW",date:"Jul 15",day:"Wed",time:"4:00 PM",address:"Portland, OR (register for address)",lat:45.5210,lng:-122.6762,tags:["Networking","HappyHour","ClimateLeadership"]},
+  {title:"Nurtured in Nature",date:"Jul 15",day:"Wed",time:"4:00 PM",address:"Gabriel Park, SW 45th Ave & Vermont St, Portland, OR 97219",lat:45.4878,lng:-122.7140,tags:["Nature","Wellness","Community"]},
+  {title:"Confessions of a Pilot: How to Fly Better in a Climate Crisis",date:"Jul 15",day:"Wed",time:"4:30 PM",address:"PAE, 151 SW 1st Ave Ste 300, Portland, OR 97204",lat:45.5200,lng:-122.6742,tags:["Aviation","ClimateCrisis","SustainableTravel"]},
+  {title:"Community Mending and Sustainable Fashion at Sincere Studio",date:"Jul 15",day:"Wed",time:"6:00 PM",address:"Sincere Studio, 2134 N Flint Ave, Portland, OR 97227",lat:45.5400,lng:-122.6720,tags:["SlowFashion","Mending","SustainableFashion"]},
+
+  // ── Jul 16, Thursday ──
+  {title:"Global Shocks, Local Tables: Why Smallholder Farmer Resilience Matters",date:"Jul 16",day:"Thu",time:"11:00 AM",address:"Portland, OR (TBC)",lat:45.5300,lng:-122.6900,tags:["FoodJustice","SmallholderFarmers","Resilience"]},
+  {title:"Portland State of Charge: Batteries at PNW Climate Week",date:"Jul 16",day:"Thu",time:"12:00 PM",address:"UpStart Collective, 111 SW 5th Ave, Portland, OR 97204",lat:45.5210,lng:-122.6760,tags:["EnergyStorage","Batteries","CleanTech"]},
   {title:"RBC Classes Open House: Explore, Create, and Get Inspired",date:"Jul 16",day:"Thu",time:"12:00 PM",address:"3625 N Mississippi Ave, Portland, OR 97227",lat:45.5484,lng:-122.6754,tags:["Reuse","DIY","Education","Community"]},
-  {title:"Portland State of Charge: Batteries at PNW Climate Week",date:"Jul 16",day:"Thu",time:"12:00 PM",address:"111 SW 5th Ave, Portland, OR 97204",lat:45.5210,lng:-122.6760,tags:["EnergyStorage","Batteries","CleanTech"]},
-  {title:"Oregon Natural Fiber Mill — Factory Tour",date:"Jul 16",day:"Thu",time:"2:00 PM",address:"Slabtown, Portland, OR (TBC)",lat:45.5350,lng:-122.6900,tags:["NaturalFibers","SustainableTextiles","FactoryTour"]},
-  {title:"Climate Innovation at Work",date:"Jul 16",day:"Thu",time:"2:30 PM",address:"Prosper Portland (TBC)",lat:45.5200,lng:-122.6800,tags:["ClimateInnovation","GreenJobs","EconomicDevelopment"]},
-  {title:"Portland Garment Factory — Factory Tour",date:"Jul 16",day:"Thu",time:"3:30 PM",address:"Hazelwood, Portland, OR (TBC)",lat:45.5100,lng:-122.5600,tags:["GarmentIndustry","SustainableFashion","FactoryTour"]},
-  {title:"Development Drinks: Global Climate Solutions",date:"Jul 16",day:"Thu",time:"4:30 PM",address:"1810 NW Glisan St, Portland, OR 97209",lat:45.5250,lng:-122.6910,tags:["GlobalClimate","Networking","Development"]},
-  {title:"Connecting with Power: Women in Clean Energy Leadership",date:"Jul 16",day:"Thu",time:"5:00 PM",address:"1417 NW Everett St, Portland, OR 97209",lat:45.5250,lng:-122.6850,tags:["WomenInEnergy","CleanEnergy","Leadership"]},
-  {title:"Climate Curious PNW Climate Week Happy Hour",date:"Jul 16",day:"Thu",time:"5:30 PM",address:"431 SW Harvey Milk St, Portland, OR 97204",lat:45.5190,lng:-122.6780,tags:["Networking","HappyHour","ClimateCurious"]},
-  {title:"An Honest Discussion About the Energy Transition",date:"Jul 16",day:"Thu",time:"5:30 PM",address:"650 SW Columbia St, Bend, OR 97702",lat:44.0520,lng:-121.3150,tags:["EnergyTransition","CleanEnergy","HonestConversation"]},
-  {title:"Love Trees! 5th Annual 350PDX Urban Shade Equity Pedalpalooza Ride",date:"Jul 16",day:"Thu",time:"6:00 PM",address:"SE 92nd Ave & SE Holgate Blvd, Portland, OR 97266",lat:45.4900,lng:-122.5700,tags:["UrbanForestry","Equity","BikeRide","Pedalpalooza"]},
+  {title:"Oregon Natural Fiber Mill — Factory Tour",date:"Jul 16",day:"Thu",time:"2:00 PM",address:"Portland, OR (register for address)",lat:45.5350,lng:-122.6900,tags:["NaturalFibers","SustainableTextiles","FactoryTour"]},
+  {title:"Climate Innovation at Work",date:"Jul 16",day:"Thu",time:"2:30 PM",address:"Portland, OR (register for address)",lat:45.5200,lng:-122.6800,tags:["ClimateInnovation","GreenJobs","EconomicDevelopment"]},
+  {title:"Portland Garment Factory — Factory Tour",date:"Jul 16",day:"Thu",time:"3:30 PM",address:"Portland, OR (register for address)",lat:45.5100,lng:-122.5600,tags:["GarmentIndustry","SustainableFashion","FactoryTour"]},
+  {title:"Climate, Coatings & Cocktails",date:"Jul 16",day:"Thu",time:"4:00 PM",address:"Sustainable Northwest Wood, 2701 SE 14th Ave, Portland, OR 97202",lat:45.5033,lng:-122.6493,tags:["Buildings","EmbodiedCarbon","Networking"]},
+  {title:"Connecting with Power: Women in Clean Energy Leadership",date:"Jul 16",day:"Thu",time:"5:00 PM",address:"Vestas, 1417 NW Everett St, Portland, OR 97209",lat:45.5250,lng:-122.6850,tags:["WomenInEnergy","CleanEnergy","Leadership"]},
+  {title:"Climate Curious PNW Climate Week Happy Hour",date:"Jul 16",day:"Thu",time:"5:30 PM",address:"Midtown Beer Garden, 431 SW Harvey Milk St, Portland, OR 97204",lat:45.5190,lng:-122.6780,tags:["Networking","HappyHour","ClimateCurious"]},
+  {title:"Love Trees! 5th Annual 350PDX Urban Shade Equity Pedalpalooza Ride",date:"Jul 16",day:"Thu",time:"6:00 PM",address:"Lents Park, 4808 SE 92nd Ave, Portland, OR 97266",lat:45.4900,lng:-122.5700,tags:["UrbanForestry","Equity","BikeRide","Pedalpalooza"]},
+
+  // ── Jul 17, Friday ──
+  {title:"Make a Difference via Open Source Projects for Sustainability",date:"Jul 17",day:"Fri",time:"8:00 AM",address:"Portland, OR (virtual/hybrid — TBC)",lat:45.5200,lng:-122.6802,tags:["OpenSource","ClimateInnovation","Technology"]},
   {title:"Solar, Reuse & Housing Innovation: Practical Pathways for Portland Homeowners",date:"Jul 17",day:"Fri",time:"8:30 AM",address:"3625 N Mississippi Ave, Portland, OR 97227",lat:45.5486,lng:-122.6756,tags:["Solar","Reuse","Housing","Community"]},
   {title:"Tour and Volunteer at Kindness Farm!",date:"Jul 17",day:"Fri",time:"9:00 AM",address:"7101 SE 127th Ave, Portland, OR 97236",lat:45.4700,lng:-122.5300,tags:["UrbanFarm","Volunteer","FoodJustice","Community"]},
-  {title:"Buildings Cause a Third of Global Emissions. Who's Solving It?",date:"Jul 17",day:"Fri",time:"9:00 AM",address:"Southwest Portland (TBC)",lat:45.4800,lng:-122.7000,tags:["Buildings","EmbodiedCarbon","ClimateSolutions"]},
-  {title:"Better Together: Co-Housing Tour",date:"Jul 17",day:"Fri",time:"5:00 PM",address:"4779 NE Going St, Portland, OR 97211",lat:45.5540,lng:-122.6150,tags:["CoHousing","CommunityLiving","SustainableLiving"]},
-  {title:"Westside Sustainable Living Fair",date:"Jul 18",day:"Sat",time:"9:00 AM",address:"150 E Main St, Hillsboro, OR 97123",lat:45.5230,lng:-122.9850,tags:["SustainableLiving","FarmersMarket","EcoFriendly"]},
+  {title:"Buildings Cause a Third of Global Emissions. Who's Solving It?",date:"Jul 17",day:"Fri",time:"9:00 AM",address:"Portland, OR (register for address)",lat:45.4800,lng:-122.7000,tags:["Buildings","EmbodiedCarbon","ClimateSolutions"]},
+  {title:"WOB Vendor Mixer & Celebration",date:"Jul 17",day:"Fri",time:"10:00 AM",address:"3418 SE Hawthorne Blvd, Portland, OR 97214",lat:45.5117,lng:-122.6310,tags:["WomenOwned","Business","Networking","Community"]},
+  {title:"PDX Community Climate Fest",date:"Jul 17",day:"Fri",time:"4:00 PM",address:"The Lantern, 2828 SE Stephens St, Portland, OR 97214",lat:45.5050,lng:-122.6480,tags:["Community","ClimateAction","LocalSolutions","Festival"]},
+  {title:"Development Drinks: First-Mile Climate Solutions",date:"Jul 17",day:"Fri",time:"4:30 PM",address:"Hostel Cafe, 1810 NW Glisan St, Portland, OR 97209",lat:45.5250,lng:-122.6910,tags:["GlobalClimate","Networking","Development"]},
+  {title:"Better Together: Co-Housing Tour",date:"Jul 17",day:"Fri",time:"5:00 PM",address:"4779 NE Going St, Portland, OR 97218",lat:45.5540,lng:-122.6150,tags:["CoHousing","CommunityLiving","SustainableLiving"]},
+  {title:"Bike Together to PDX Community Climate Fest!",date:"Jul 17",day:"Fri",time:"5:30 PM",address:"Ladd Circle Park, 1988 SE Mulberry Ave, Portland, OR 97214",lat:45.5022,lng:-122.6458,tags:["BikeRide","Community","ClimateAction"]},
+  {title:"Free Yoga @ PDX Community Climate Fest!",date:"Jul 17",day:"Fri",time:"7:00 PM",address:"The Lantern, 2828 SE Stephens St, Portland, OR 97214",lat:45.5052,lng:-122.6482,tags:["Wellness","Community","Festival"]},
+
+  // ── Jul 18, Saturday ──
+  {title:"Westside Sustainable Living Fair",date:"Jul 18",day:"Sat",time:"9:00 AM",address:"Hillsboro Farmers Market, 150 E Main St, Hillsboro, OR 97124",lat:45.5230,lng:-122.9850,tags:["SustainableLiving","FarmersMarket","EcoFriendly"]},
+  {title:"Trails Volunteer Work Party — Forest Park",date:"Jul 18",day:"Sat",time:"9:00 AM",address:"Fire Lane 3 Trailhead, 4102 NW Thunder Crest Dr, Portland, OR 97229",lat:45.5560,lng:-122.7640,tags:["Volunteer","Nature","UrbanForestry","Community"]},
+  {title:"PDX Thread Collective Clothing Swap & Textile Talk",date:"Jul 18",day:"Sat",time:"10:00 AM",address:"Social Good Place, 4511 SE Main St, Portland, OR 97215",lat:45.5140,lng:-122.6190,tags:["ClothingSwap","SustainableFashion","Community"]},
   {title:"Sabin Sun-Fun Day",date:"Jul 18",day:"Sat",time:"10:00 AM",address:"4053 NE 18th Ave, Portland, OR 97212",lat:45.5500,lng:-122.6500,tags:["Community","Solar","Neighborhood"]},
-  {title:"PDX Thread Collective Clothing Swap",date:"Jul 18",day:"Sat",time:"10:00 AM",address:"4511 SE Main St, Portland, OR 97215",lat:45.5140,lng:-122.6190,tags:["ClothingSwap","SustainableFashion","Community"]},
-  {title:"Discover Pathways into Reuse, Sustainability, and the Trades",date:"Jul 18",day:"Sat",time:"11:00 AM",address:"3625 N Mississippi Ave, Portland, OR 97227",lat:45.5488,lng:-122.6758,tags:["Reuse","Trades","Education","Youth"]}
+  {title:"Discover Pathways into Reuse, Sustainability, and the Trades",date:"Jul 18",day:"Sat",time:"11:00 AM",address:"3625 N Mississippi Ave, Portland, OR 97227",lat:45.5488,lng:-122.6758,tags:["Reuse","Trades","Education","Youth"]},
+  {title:"Portland Food Forest Initiative Site Tour",date:"Jul 18",day:"Sat",time:"1:00 PM",address:"5700 NE Alberta St, Portland, OR 97218",lat:45.5594,lng:-122.6130,tags:["FoodJustice","UrbanFarm","Community","Nature"]},
+
+  // ── Jul 19, Sunday ──
+  {title:"Make Button Bead Flowers at ReClaim It",date:"Jul 19",day:"Sun",time:"1:00 PM",address:"ReClaim It, 1 N Killingsworth St, Portland, OR 97217",lat:45.5780,lng:-122.6740,tags:["Reuse","DIY","Community","Crafts"]},
+
+  // ── Jul 20, Monday (Closing Event) ──
+  {title:"ORCAH Partner+ Social: Better Together! (PNW Climate Week Closing Event)",date:"Jul 20",day:"Mon",time:"4:00 PM",address:"2035 NW Front Ave Suite 501, Portland, OR 97209",lat:45.5318,lng:-122.6940,tags:["Community","Networking","ClimateAction","Featured"]}
 ];
 
 // ═══════════════════════════════════════════════════
@@ -328,33 +364,15 @@ const EVACUATION = [
 ];
 
 // ═══════════════════════════════════════════════════
-// SIGNAGE / MARKETING OPPORTUNITIES
-// ═══════════════════════════════════════════════════
-const SIGNAGE = [
-  {title:"📍 Signage Opp — SW 5th & Morrison",address:"SW 5th Ave & SW Morrison St, Portland, OR 97204",lat:45.5205,lng:-122.6765,note:"High foot traffic corner. Near PAE & UpStart events. Replace with confirmed business name."},
-  {title:"📍 Signage Opp — Powell's Books Area",address:"1005 W Burnside St, Portland, OR 97209",lat:45.5233,lng:-122.6815,note:"High visibility NW. Near Mission Theater, Hostel Cafe, Vestas."},
-  {title:"📍 Signage Opp — NW 23rd Ave Corridor",address:"NW 23rd Ave & NW Kearney St, Portland, OR 97210",lat:45.5312,lng:-122.6992,note:"Busy retail corridor. Near NW Portland events and Slabtown."},
-  {title:"📍 Signage Opp — N Mississippi Ave Retail",address:"3800 N Mississippi Ave, Portland, OR 97227",lat:45.5470,lng:-122.6755,note:"Independent retail strip. Near Future ReUse Builders, Sincere Studio, all Mississippi Ave events."},
-  {title:"📍 Signage Opp — NE Alberta Arts District",address:"NE Alberta St & NE 30th Ave, Portland, OR 97211",lat:45.5594,lng:-122.6390,note:"High community engagement. Near Co-Housing tour."},
-  {title:"📍 Signage Opp — NE Broadway Corridor",address:"NE Broadway & NE 15th Ave, Portland, OR 97232",lat:45.5355,lng:-122.6500,note:"Busy retail street. Near Lloyd District / Metro Gov events."},
-  {title:"📍 Signage Opp — SE Division St",address:"SE Division St & SE 12th Ave, Portland, OR 97202",lat:45.5046,lng:-122.6530,note:"Popular SE restaurant corridor. Near Place to B & Hungry Tiger."},
-  {title:"📍 Signage Opp — SE Hawthorne Blvd",address:"SE Hawthorne Blvd & SE 30th Ave, Portland, OR 97214",lat:45.5120,lng:-122.6330,note:"High foot traffic. Near Sunnyside Community Center & Social Good Place events."},
-  {title:"📍 Signage Opp — SE Foster Road",address:"SE Foster Rd & SE 72nd Ave, Portland, OR 97206",lat:45.4960,lng:-122.5740,note:"Growing SE corridor. Near Lents Park & Kindness Farm events."},
-  {title:"📍 Signage Opp — Gresham Downtown",address:"Powell Blvd & Main City Center, Gresham, OR 97030",lat:45.5022,lng:-122.4310,note:"Near Community Warehouse (Jul 14). Replace with confirmed local business."},
-  {title:"📍 Signage Opp — Hillsboro Main St",address:"E Main St & NE 2nd Ave, Hillsboro, OR 97123",lat:45.5228,lng:-122.9870,note:"Adjacent to Hillsboro Farmers Market (Jul 18 Westside Sustainable Living Fair)."},
-  {title:"📍 Signage Opp — N Interstate MAX Corridor",address:"N Interstate Ave & N Skidmore St, Portland, OR 97217",lat:45.5625,lng:-122.6750,note:"MAX Yellow Line corridor. High transit-rider visibility. Near Energy Empowerment & N Portland events."}
-];
-
-// ═══════════════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════════════
 const DAYS = ["Thu","Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 const DAY_LABELS = {Thu:"Thursday",Sun:"Sunday",Mon:"Monday",Tue:"Tuesday",Wed:"Wednesday",Fri:"Friday",Sat:"Saturday"};
 
 let map, infoWindow;
-let eventMarkers=[], parkingMarkers=[], evacMarkers=[], signageMarkers=[];
+let eventMarkers=[], parkingMarkers=[], evacMarkers=[];
 let trafficLayer=null, transitLayer=null;
-let trafficOn=false, transitOn=false, parkingOn=false, evacOn=false, signageOn=false;
+let trafficOn=false, transitOn=false, parkingOn=false, evacOn=false;
 let activeTag=null, activeDay=null, selectedIndex=null;
 
 const allTags = [...new Set(EVENTS.flatMap(e => e.tags))].sort();
@@ -367,7 +385,6 @@ const icons = {
   event:   () => ({path:google.maps.SymbolPath.CIRCLE,fillColor:"#17C6A5",fillOpacity:1,strokeColor:"#00363A",strokeWeight:2,scale:9}),
   parking: () => ({path:google.maps.SymbolPath.CIRCLE,fillColor:"#8b5cf6",fillOpacity:1,strokeColor:"#fff",strokeWeight:2,scale:7}),
   evac:    () => ({path:google.maps.SymbolPath.CIRCLE,fillColor:"#dc2626",fillOpacity:1,strokeColor:"#fff",strokeWeight:2,scale:7}),
-  signage: () => ({path:google.maps.SymbolPath.CIRCLE,fillColor:"#f59e0b",fillOpacity:1,strokeColor:"#fff",strokeWeight:2,scale:7})
 };
 
 // ═══════════════════════════════════════════════════
@@ -410,12 +427,6 @@ function initMap() {
     evacMarkers.push(m);
   });
 
-  SIGNAGE.forEach(s => {
-    const m = new google.maps.Marker({position:{lat:s.lat,lng:s.lng},map:null,title:s.title,icon:icons.signage()});
-    m.addListener("click", () => openLayerInfo(s,"#f59e0b","📍 Signage"));
-    signageMarkers.push(m);
-  });
-
   buildDayBar();
   buildTagBar();
   buildEventList();
@@ -424,7 +435,7 @@ function initMap() {
   document.getElementById("btn-transit").addEventListener("click",()=>{ transitOn=!transitOn; transitLayer.setMap(transitOn?map:null); document.getElementById("btn-transit").classList.toggle("active",transitOn); });
   document.getElementById("btn-parking").addEventListener("click",()=>{ parkingOn=!parkingOn; parkingMarkers.forEach(m=>m.setMap(parkingOn?map:null)); document.getElementById("btn-parking").classList.toggle("active",parkingOn); });
   document.getElementById("btn-evac").addEventListener("click",()=>{ evacOn=!evacOn; evacMarkers.forEach(m=>m.setMap(evacOn?map:null)); document.getElementById("btn-evac").classList.toggle("active",evacOn); });
-  document.getElementById("btn-signage").addEventListener("click",()=>{ signageOn=!signageOn; signageMarkers.forEach(m=>m.setMap(signageOn?map:null)); document.getElementById("btn-signage").classList.toggle("active",signageOn); });
+
 }
 
 // ═══════════════════════════════════════════════════
@@ -477,7 +488,7 @@ function buildDayBar() {
   const orderedDays=["Thu","Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   const uniqueDays=[...new Set(EVENTS.map(e=>e.day))];
   // Sort by first appearance in schedule
-  const sorted=["Thu","Sun","Mon","Tue","Wed","Fri","Sat"].filter(d=>uniqueDays.includes(d));
+  const sorted=["Fri","Sun","Mon","Tue","Wed","Thu","Sat"].filter(d=>uniqueDays.includes(d));
   sorted.forEach(day=>{
     const count=EVENTS.filter(e=>e.day===day).length;
     const pill=document.createElement("button");
